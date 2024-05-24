@@ -221,6 +221,11 @@ h1{
   border: none;
   cursor: pointer;
   font-weight: bold;
+  transition: scale .2s;
+}
+.dropbtn:hover{
+  opacity: .7;
+  scale: .9;
 }
 
 .dropdown-content {
@@ -234,7 +239,9 @@ h1{
   padding: 10px;
   font-size: 1.1em;
 }
-
+.dropdown-content.show{
+  font-size: 1em;
+}
 .dropdown-content p,
 .dropdown-content ul {
   margin: 5px 0;
@@ -250,7 +257,7 @@ h1{
 }
 
 .dropdown-content .wrong-location {
-  color: #FFD700; /* yellow */
+  color: yellow;
 }
 
 .dropdown-content .wrong {
@@ -258,8 +265,13 @@ h1{
 }
 
 .dropdown:hover .dropdown-content {
+  display: none;
+}
+
+.dropdown.active .dropdown-content {
   display: block;
 }
+
 
 .buttons-container {
   display: flex;
@@ -299,13 +311,16 @@ h1{
 
 
 @media screen and (max-width: 425px) {
+  .main-body{
+    max-height: 700px;
+  }
   .tile{
-    font-size: 4em;
-    
+    font-size: 3.3em;
   }
   .guess-grid{
-    grid-template-columns: repeat(5, 6em);
-    grid-template-rows: repeat(6, 6em);
+    grid-template-columns: repeat(5, 5em);
+    grid-template-rows: repeat(6, 5em);
+    max-height: 350px;
   }
   .key{
     font-size: 1.8em;
@@ -313,6 +328,13 @@ h1{
   .keyboard{
     grid-template-columns: repeat(20, minmax(auto, 1.9em));
     grid-auto-rows: 4em;
+    
+  }
+  .buttons-container{
+    position: relative;
+  }
+  .dropdown-content{
+    max-width: 300px;
   }
 }
 

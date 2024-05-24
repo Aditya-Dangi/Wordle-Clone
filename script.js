@@ -15495,20 +15495,17 @@ function danceTiles(tiles) {
 }
 
 function toggleDropdown() {
-  document.getElementById("dropdownContent").classList.toggle("show");
+  var dropdown = document.querySelector(".dropdown");
+  dropdown.classList.toggle("active");
 }
 
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-      var dropdowns = document.getElementsByClassName("dropdown-content");
-      for (var i = 0; i < dropdowns.length; i++) {
-          var openDropdown = dropdowns[i];
-          if (openDropdown.classList.contains('show')) {
-              openDropdown.classList.remove('show');
-          }
-      }
+document.addEventListener("click", function(event) {
+  var dropdown = document.querySelector(".dropdown");
+  if (!event.target.matches('.dropbtn') && !dropdown.contains(event.target)) {
+    dropdown.classList.remove('active');
   }
-};
+});
+
 
 document.getElementById("play-again-btn").addEventListener("click", playAgain);
 document.getElementById("give-up-btn").addEventListener("click", giveUp);
