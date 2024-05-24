@@ -279,6 +279,7 @@ h1{
   justify-content: center;
   gap: 1em;
   margin-top: 1em;
+  position: relative;
 }
 
 .action-btn {
@@ -331,9 +332,6 @@ h1{
     grid-auto-rows: 4em;
     
   }
-  .buttons-container{
-    position: relative;
-  }
   .dropdown-content{
     max-width: 300px;
   }
@@ -354,4 +352,7 @@ h1{
   .action-btn{
     font-size: .8em;
   }
+}
+@media screen and (1440 < min-width <= 2560px) {
+  
 }
