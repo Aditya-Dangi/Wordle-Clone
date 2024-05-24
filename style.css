@@ -17,7 +17,6 @@ body {
   align-items: center;
   justify-content: space-around;
   flex-direction: column;
-  height: 90vh;
 }
 h1{
   color: white;
