@@ -313,7 +313,7 @@ h1{
 
 @media screen and (max-width: 425px) {
   .main-body{
-    max-height: 600px;
+    height: 600px;
   }
   .tile{
     font-size: 3.3em;
@@ -351,7 +351,4 @@ h1{
   .action-btn{
     font-size: .8em;
   }
-}
-@media screen and (1440 < min-width <= 2560px) {
-  
 }
