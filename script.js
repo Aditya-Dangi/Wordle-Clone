@@ -15507,25 +15507,18 @@ document.addEventListener("click", function(event) {
 });
 
 
-document.getElementById("play-again-btn").addEventListener("click", playAgain);
 document.getElementById("give-up-btn").addEventListener("click", giveUp);
 
 function playAgain() {
-  guessGrid.querySelectorAll('.tile').forEach(tile => {
-    tile.textContent = '';
-    tile.removeAttribute('data-state');
-    tile.removeAttribute('data-letter');
-  });
-
-  keyboard.querySelectorAll('.key').forEach(key => {
-    key.classList.remove('correct', 'wrong-location', 'wrong');
-  });
-
-  targetWord = targetWords[Math.floor(Math.random() * targetWords.length)]; // Select a new target word
-  startInteraction();
+  location.reload();
 }
+
+
+
+
+
 
 function giveUp() {
   stopInteraction();
-  showAlert(`The word was: ${targetWord.toUpperCase()}`, 5000);
+  showAlert(`The word was: ${targetWord.toUpperCase()}`, 2000);
 }

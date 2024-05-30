@@ -336,19 +336,19 @@ h1{
   }
 }
 
-@media screen and (1024px <= width <=1440px) {
-  .guess-grid{
+@media screen and (min-width: 1024px) and (max-width: 1440px) {
+  .guess-grid {
     grid-template-columns: repeat(5, 3em);
     grid-template-rows: repeat(6, 3em);
   }
-  .keyboard{
+  .keyboard {
     grid-template-columns: repeat(20, minmax(auto, .8em));
     grid-auto-rows: 2em;
   }
-  .key{
+  .key {
     font-size: .8em;
   }
-  .action-btn{
+  .action-btn {
     font-size: .8em;
   }
 }
