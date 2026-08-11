@@ -1,0 +1,12 @@
+<label class="toggle-row">
+  <span class="toggle-row-label">
+    <span>{{ label() }}</span>
+    @if (sub()) {
+      <small>{{ sub() }}</small>
+    }
+  </span>
+  <span class="switch">
+    <input type="checkbox" [checked]="checked()" (change)="onChange($event)" />
+    <span class="switch-track"></span>
+  </span>
+</label>

@@ -1,0 +1,18 @@
+@if (label()) {
+  <div class="option-group-label">{{ label() }}</div>
+}
+<div class="option-row">
+  @for (choice of choices(); track choice.value) {
+    <button
+      type="button"
+      class="option-chip"
+      [class.selected]="choice.value === selected()"
+      (click)="choose(choice.value)"
+    >
+      {{ choice.label }}
+      @if (choice.sub) {
+        <span class="chip-sub">{{ choice.sub }}</span>
+      }
+    </button>
+  }
+</div>

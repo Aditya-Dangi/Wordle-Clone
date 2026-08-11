@@ -1,0 +1,33 @@
+<header class="app-header" [class.scrolled]="scrolled()">
+  <div class="header-inner">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <span class="brand-tile">W</span>
+      </span>
+      <h1>Wordle</h1>
+    </div>
+
+    <nav class="main-nav" aria-label="Main navigation">
+      <a class="nav-btn" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+      <a class="nav-btn" routerLink="/stats" routerLinkActive="active">Stats</a>
+      <a class="nav-btn" routerLink="/achievements" routerLinkActive="active">Achievements</a>
+      <a class="nav-btn" routerLink="/settings" routerLinkActive="active">Settings</a>
+    </nav>
+
+    <div class="header-actions">
+      <div class="hud-chip streak-chip" title="Current win streak">
+        <span class="hud-chip-icon">🔥</span>
+        <span class="hud-chip-value">{{ streaks().current }}</span>
+      </div>
+      <div class="hud-chip level-chip" title="Player level and XP">
+        <span class="hud-chip-value">LV {{ profile().level }}</span>
+        <span class="xp-bar"><span class="xp-fill" [style.width.%]="xpPercent()"></span></span>
+      </div>
+      <div class="hud-chip coins-chip" title="Coins">
+        <span class="hud-chip-icon">💎</span>
+        <span class="hud-chip-value">{{ profile().coins }}</span>
+      </div>
+      <button class="icon-btn" type="button" aria-label="How to play" (click)="openHowto()">?</button>
+    </div>
+  </div>
+</header>

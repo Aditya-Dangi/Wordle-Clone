@@ -1,0 +1,83 @@
+<a class="link-btn back-btn" routerLink="/">&larr; Back</a>
+
+<div class="setup-panel card">
+  <div class="setup-icon">{{ mode().icon }}</div>
+  <h2>{{ mode().label }}</h2>
+  <p class="muted">{{ mode().description }}</p>
+
+  <div class="setup-options">
+    @switch (modeKey()) {
+      @case ('classic') {
+        <app-option-chip-group label="Difficulty" [choices]="difficultyChoices" [selected]="selections().difficulty" (selectedChange)="setDifficulty($event)"></app-option-chip-group>
+        <app-option-chip-group label="Word Length" [choices]="wordLengthChoices" [selected]="selections().wordLength" (selectedChange)="setWordLength($event)"></app-option-chip-group>
+        @if (selections().wordLength === 5) {
+          <app-option-chip-group label="Category" [choices]="categoryChoices()" [selected]="selections().category" (selectedChange)="setCategory($event)"></app-option-chip-group>
+        }
+      }
+      @case ('endless') {
+        <app-option-chip-group label="Difficulty" [choices]="difficultyChoices" [selected]="selections().difficulty" (selectedChange)="setDifficulty($event)"></app-option-chip-group>
+        <app-option-chip-group label="Word Length" [choices]="wordLengthChoices" [selected]="selections().wordLength" (selectedChange)="setWordLength($event)"></app-option-chip-group>
+        @if (selections().wordLength === 5) {
+          <app-option-chip-group label="Category" [choices]="categoryChoices()" [selected]="selections().category" (selectedChange)="setCategory($event)"></app-option-chip-group>
+        }
+      }
+      @case ('timeAttack') {
+        <app-option-chip-group label="Difficulty" [choices]="difficultyChoices" [selected]="selections().difficulty" (selectedChange)="setDifficulty($event)"></app-option-chip-group>
+        <app-option-chip-group label="Word Length" [choices]="wordLengthChoices" [selected]="selections().wordLength" (selectedChange)="setWordLength($event)"></app-option-chip-group>
+        @if (selections().wordLength === 5) {
+          <app-option-chip-group label="Category" [choices]="categoryChoices()" [selected]="selections().category" (selectedChange)="setCategory($event)"></app-option-chip-group>
+        }
+      }
+      @case ('blitz') {
+        <app-option-chip-group label="Timer" [choices]="blitzTimerChoices" [selected]="selections().timerSeconds" (selectedChange)="setTimer($event)"></app-option-chip-group>
+        <app-option-chip-group label="Word Length" [choices]="wordLengthChoices" [selected]="selections().wordLength" (selectedChange)="setWordLength($event)"></app-option-chip-group>
+      }
+      @case ('survival') {
+        <p class="muted">Starts at Easy. Every word you solve raises the difficulty: word length, guess count, and Hard Mode rules escalate. One loss ends the run.</p>
+      }
+      @case ('marathon') {
+        <app-option-chip-group label="Difficulty" [choices]="difficultyChoices" [selected]="selections().difficulty" (selectedChange)="setDifficulty($event)"></app-option-chip-group>
+        <app-option-chip-group label="Word Length" [choices]="wordLengthChoices" [selected]="selections().wordLength" (selectedChange)="setWordLength($event)"></app-option-chip-group>
+      }
+      @case ('suddenDeath') {
+        <app-option-chip-group label="Word Length" [choices]="wordLengthChoices" [selected]="selections().wordLength" (selectedChange)="setWordLength($event)"></app-option-chip-group>
+        <p class="muted">You get exactly one guess per word. Miss once and the run ends.</p>
+      }
+      @case ('multiword2') {
+        <app-option-chip-group label="Word Length" [choices]="wordLengthChoices" [selected]="selections().wordLength" (selectedChange)="setWordLength($event)"></app-option-chip-group>
+        <p class="muted">One stream of guesses is checked against every board at once.</p>
+      }
+      @case ('multiword3') {
+        <app-option-chip-group label="Word Length" [choices]="wordLengthChoices" [selected]="selections().wordLength" (selectedChange)="setWordLength($event)"></app-option-chip-group>
+        <p class="muted">One stream of guesses is checked against every board at once.</p>
+      }
+      @case ('multiword4') {
+        <app-option-chip-group label="Word Length" [choices]="wordLengthChoices" [selected]="selections().wordLength" (selectedChange)="setWordLength($event)"></app-option-chip-group>
+        <p class="muted">One stream of guesses is checked against every board at once.</p>
+      }
+      @case ('reverse') {
+        <app-option-chip-group label="Word Length" [choices]="wordLengthChoices" [selected]="selections().wordLength" (selectedChange)="setWordLength($event)"></app-option-chip-group>
+        <p class="muted">Think of a word of this length. The game will guess it - you just color the tiles.</p>
+      }
+      @case ('custom') {
+        <app-option-chip-group label="Word Length" [choices]="wordLengthChoices" [selected]="selections().mods.wordLength" (selectedChange)="setMod('wordLength', $any($event))"></app-option-chip-group>
+        <app-option-chip-group label="Guesses" [choices]="guessCountChoices" [selected]="selections().mods.maxGuesses" (selectedChange)="setMod('maxGuesses', $any($event))"></app-option-chip-group>
+        <app-option-chip-group label="Timer" [choices]="timerChoices" [selected]="selections().mods.timerSeconds || 0" (selectedChange)="setMod('timerSeconds', $any($event) || null)"></app-option-chip-group>
+        <app-toggle-row label="Hard Mode" sub="Discovered letters must be reused" [checked]="selections().mods.hardMode" (checkedChange)="setMod('hardMode', $event)"></app-toggle-row>
+        <app-toggle-row label="Blind Tiles" sub="One tile per row stays hidden" [checked]="selections().mods.blindTiles" (checkedChange)="setMod('blindTiles', $event)"></app-toggle-row>
+        <app-toggle-row label="No Vowel Feedback" sub="Vowel tiles never reveal color" [checked]="selections().mods.noVowelFeedback" (checkedChange)="setMod('noVowelFeedback', $event)"></app-toggle-row>
+        <app-toggle-row label="No Repeat Guesses" sub="You can't submit the same word twice" [checked]="selections().mods.noRepeatGuesses" (checkedChange)="setMod('noRepeatGuesses', $event)"></app-toggle-row>
+        <app-toggle-row label="No Hints" sub="Disables the hint bar" [checked]="selections().mods.noHints" (checkedChange)="setMod('noHints', $event)"></app-toggle-row>
+      }
+    }
+  </div>
+
+  @if (modeKey() === 'custom') {
+    <div class="challenge-rating">
+      <span>Challenge Rating</span>
+      <strong>{{ challengeRating() }}</strong><span>/100</span>
+    </div>
+  }
+
+  <button class="btn btn-primary btn-block" type="button" (click)="start()">Start</button>
+</div>

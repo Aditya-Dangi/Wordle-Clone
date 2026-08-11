@@ -1,0 +1,6 @@
+<button type="button" class="mode-card tilt-surface tilt-glow" [appTilt]="10" (click)="activated.emit()">
+  <app-mode-visual [mode]="mode().key" [icon]="mode().icon" [boards]="mode().boards"></app-mode-visual>
+  <span class="mode-name">{{ mode().label }}</span>
+  <span class="mode-desc">{{ mode().tagline }}</span>
+  <span class="mode-best" [class.has-played]="played() > 0">{{ bestLine() }}</span>
+</button>

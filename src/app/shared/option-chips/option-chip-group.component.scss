@@ -1,0 +1,48 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+}
+
+.option-group-label {
+  font-weight: 700;
+  font-size: 0.85em;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+}
+
+.option-row {
+  display: flex;
+  gap: 0.5em;
+  flex-wrap: wrap;
+}
+
+.option-chip {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.5em 0.9em;
+  border-radius: 2em;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.85em;
+  transition: transform 100ms ease, background-color 120ms ease, border-color 120ms ease;
+}
+
+.option-chip:active {
+  transform: scale(0.95);
+}
+
+.option-chip.selected {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.option-chip .chip-sub {
+  display: block;
+  font-weight: 400;
+  font-size: 0.85em;
+  opacity: 0.85;
+}

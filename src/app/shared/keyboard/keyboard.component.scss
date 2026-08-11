@@ -1,0 +1,66 @@
+.keyboard {
+  display: grid;
+  grid-template-columns: repeat(20, minmax(auto, 1.6em));
+  grid-auto-rows: 3.2em;
+  gap: 0.35em;
+  justify-content: center;
+}
+
+.keyboard.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.key {
+  font-size: 1em;
+  grid-column: span 2;
+  border: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(160deg, color-mix(in srgb, var(--absent) 85%, white 15%), var(--absent));
+  color: var(--text);
+  text-transform: uppercase;
+  border-radius: 0.4em;
+  cursor: pointer;
+  user-select: none;
+  font-weight: 700;
+  touch-action: manipulation;
+  box-shadow: var(--elevation-1);
+  transition: transform 80ms ease, background 200ms ease, box-shadow 200ms ease;
+}
+
+.key.large {
+  grid-column: span 3;
+  font-size: 0.75em;
+}
+
+.key > svg {
+  width: 1.4em;
+  height: 1.4em;
+}
+
+.key:hover {
+  box-shadow: var(--elevation-2);
+}
+
+.key:active {
+  transform: scale(0.9);
+  box-shadow: var(--elevation-1);
+}
+
+.key[data-state="absent"] {
+  background: linear-gradient(160deg, var(--absent), color-mix(in srgb, var(--absent) 70%, black));
+  color: color-mix(in srgb, white 70%, var(--absent));
+}
+
+.key[data-state="present"] {
+  background: linear-gradient(160deg, var(--present), color-mix(in srgb, var(--present) 78%, black));
+  color: hsl(0, 0%, 10%);
+}
+
+.key[data-state="correct"] {
+  background: linear-gradient(160deg, var(--correct), color-mix(in srgb, var(--correct) 72%, black));
+  color: white;
+}

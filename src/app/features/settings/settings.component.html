@@ -1,0 +1,36 @@
+<h2 class="section-title">Settings</h2>
+
+<div class="settings-section">
+  <h3>Theme</h3>
+  <div class="theme-swatch-row">
+    @for (t of themes; track t.key) {
+      <button
+        type="button"
+        class="theme-swatch"
+        [class.selected]="settings().theme === t.key"
+        [style.background]="t.color"
+        [title]="t.name"
+        (click)="setTheme(t.key)"
+      >{{ t.name.slice(0, 2) }}</button>
+    }
+  </div>
+</div>
+
+<div class="settings-section">
+  <h3>Preferences</h3>
+  @for (t of toggles; track t.key) {
+    <app-toggle-row [label]="t.label" [sub]="t.sub" [checked]="$any(settings())[t.key]" (checkedChange)="toggle(t.key, $event)"></app-toggle-row>
+  }
+</div>
+
+<div class="settings-section">
+  <h3>Default Difficulty</h3>
+  <app-option-chip-group [choices]="difficultyChoices" [selected]="settings().defaultDifficulty" (selectedChange)="setDefaultDifficulty($event)"></app-option-chip-group>
+</div>
+
+<div class="settings-section">
+  <h3>Data</h3>
+  <button type="button" class="btn btn-secondary" style="margin-right: 0.5em" (click)="resetStats()">Reset Statistics</button>
+  <button type="button" class="btn btn-danger" (click)="clearAll()">Clear All Data</button>
+  <button type="button" class="btn btn-secondary" style="margin-top: 0.6em; display: block" (click)="openHowto()">How to Play</button>
+</div>

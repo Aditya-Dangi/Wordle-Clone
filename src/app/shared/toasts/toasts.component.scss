@@ -1,0 +1,46 @@
+.achievement-toast-container {
+  position: fixed;
+  bottom: 1em;
+  right: 1em;
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  align-items: flex-end;
+}
+
+.achievement-toast {
+  background: var(--bg-elevated);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 0.7em 1em;
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  box-shadow: var(--shadow);
+  animation: slideIn 250ms ease, fadeOut 400ms ease 3.6s forwards;
+  max-width: 18em;
+}
+
+.achievement-toast .achievement-icon {
+  font-size: 1.6em;
+}
+
+.achievement-toast strong {
+  display: block;
+  font-size: 0.85em;
+}
+
+.achievement-toast span {
+  color: var(--text-muted);
+  font-size: 0.75em;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(1.5em); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fadeOut {
+  to { opacity: 0; transform: translateY(-0.4em); }
+}

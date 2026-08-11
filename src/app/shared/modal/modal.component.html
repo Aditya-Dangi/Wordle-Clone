@@ -1,0 +1,8 @@
+@if (open()) {
+  <div class="modal-overlay" (click)="onOverlayClick($event)">
+    <div class="modal" [class.modal-small]="small()" role="dialog" aria-modal="true" [attr.aria-labelledby]="labelledBy() || null">
+      <button class="modal-close" type="button" aria-label="Close" (click)="closed.emit()">&times;</button>
+      <ng-content></ng-content>
+    </div>
+  </div>
+}

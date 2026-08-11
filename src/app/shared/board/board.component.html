@@ -1,0 +1,29 @@
+<div class="boards-container" [attr.data-boards]="boards().length">
+  @for (board of boards(); track $index; let boardIndex = $index) {
+    <div class="board-wrap">
+      @if (boards().length > 1) {
+        <div class="board-label">Board {{ boardIndex + 1 }}</div>
+      }
+      <div
+        class="guess-grid"
+        [style.grid-template-columns]="'repeat(' + wordLength() + ', var(--tile-size, 3.4rem))'"
+        [style.grid-template-rows]="'repeat(' + maxGuesses() + ', var(--tile-size, 3.4rem))'"
+      >
+        @for (row of board; track $index; let rowIndex = $index) {
+          @for (tile of row; track $index; let colIndex = $index) {
+            <div
+              class="tile"
+              [class.flip]="tile.flipping"
+              [class.shake]="tile.shake"
+              [class.dance]="tile.dance"
+              [attr.data-state]="tile.state === 'empty' ? null : tile.state"
+              (click)="onTileClick(boardIndex, rowIndex, colIndex)"
+            >
+              {{ tile.letter }}
+            </div>
+          }
+        }
+      </div>
+    </div>
+  }
+</div>

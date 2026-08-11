@@ -1,0 +1,19 @@
+<div
+  class="ab-card tilt-surface"
+  [class.locked]="locked()"
+  [class.compact]="compact()"
+  [attr.data-rarity]="rarity()"
+  [appTilt]="14"
+>
+  <div class="ab-badge">
+    <div class="ab-rim"></div>
+    <div class="ab-face">
+      <span class="ab-icon" [class.lock-icon]="locked()">{{ locked() ? '🔒' : icon() }}</span>
+    </div>
+    <div class="ab-shine"></div>
+  </div>
+  <span class="ab-name">{{ name() }}</span>
+  @if (!compact() && description()) {
+    <span class="ab-desc">{{ description() }}</span>
+  }
+</div>

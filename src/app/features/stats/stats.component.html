@@ -1,0 +1,54 @@
+<h2 class="section-title">Statistics</h2>
+
+<div class="stats-summary-grid">
+  @for (c of [
+    ['Games Played', totals().played],
+    ['Games Won', totals().won],
+    ['Win Rate', winRate()],
+    ['Current Streak', streaks().current],
+    ['Best Streak', streaks().best],
+    ['Daily Streak', streaks().daily.current],
+    ['Best Daily Streak', streaks().daily.best],
+    ['Player Level', profile().level]
+  ]; track c[0]) {
+    <div class="stats-summary-card">
+      <strong>{{ c[1] }}</strong>
+      <span>{{ c[0] }}</span>
+    </div>
+  }
+</div>
+
+<div class="card">
+  <h3 class="section-title">Guess Distribution</h3>
+  @for (row of distribution(); track row.label) {
+    <div class="distribution-row">
+      <span class="distribution-label">{{ row.label }}</span>
+      <span class="distribution-bar-track">
+        <span class="distribution-bar-fill" [style.width.%]="row.pct">{{ row.count }}</span>
+      </span>
+    </div>
+  }
+</div>
+
+<div class="card">
+  <h3 class="section-title">By Mode</h3>
+  @if (modeRows().length) {
+    <table class="mode-stats-table">
+      <thead>
+        <tr><th>Mode</th><th>Played</th><th>Win %</th><th>Avg Guesses</th></tr>
+      </thead>
+      <tbody>
+        @for (row of modeRows(); track row.modeName) {
+          <tr>
+            <td>{{ row.modeName }}</td>
+            <td>{{ row.played }}</td>
+            <td>{{ row.winRate }}</td>
+            <td>{{ row.avgGuess }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  } @else {
+    <p class="muted">No games played yet.</p>
+  }
+</div>

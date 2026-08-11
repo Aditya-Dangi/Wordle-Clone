@@ -1,0 +1,21 @@
+<nav class="bottom-nav" aria-label="Primary">
+  <a class="bn-item" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+    <span class="bn-icon" aria-hidden="true">🏠</span>
+    <span class="bn-label">Home</span>
+  </a>
+  <a class="bn-item" routerLink="/stats" routerLinkActive="active">
+    <span class="bn-icon" aria-hidden="true">📊</span>
+    <span class="bn-label">Stats</span>
+  </a>
+  <button type="button" class="bn-play" (click)="play()" [attr.aria-label]="daily().completed ? 'Go home' : 'Play daily challenge'">
+    <span class="bn-play-tile">W</span>
+  </button>
+  <a class="bn-item" routerLink="/achievements" routerLinkActive="active">
+    <span class="bn-icon" aria-hidden="true">🏆</span>
+    <span class="bn-label">Awards</span>
+  </a>
+  <a class="bn-item" routerLink="/settings" routerLinkActive="active">
+    <span class="bn-icon" aria-hidden="true">⚙️</span>
+    <span class="bn-label">Settings</span>
+  </a>
+</nav>

@@ -1,0 +1,544 @@
+/* ==========================================================================
+   Reset & base
+   ========================================================================== */
+*, *::after, *::before {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background:
+    radial-gradient(ellipse 60% 40% at 15% -10%, var(--void-glow-a), transparent 60%),
+    radial-gradient(ellipse 50% 35% at 100% 0%, var(--void-glow-b), transparent 55%),
+    var(--bg);
+  background-attachment: fixed;
+  color: var(--text);
+  min-height: 100vh;
+  transition: background-color 200ms ease, color 200ms ease;
+}
+
+button {
+  font-family: inherit;
+}
+
+h1, h2, h3, p, ul {
+  margin: 0;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+/* ==========================================================================
+   Theme variables
+   ========================================================================== */
+:root,
+:root[data-theme="midnight"] {
+  --bg: hsl(240, 12%, 8%);
+  --bg-elevated: hsl(240, 10%, 13%);
+  --surface: hsl(240, 8%, 16%);
+  --surface-hover: hsl(240, 8%, 20%);
+  --border: hsl(240, 6%, 26%);
+  --text: hsl(0, 0%, 96%);
+  --text-muted: hsl(220, 6%, 65%);
+  --correct: hsl(115, 40%, 45%);
+  --present: hsl(45, 80%, 50%);
+  --absent: hsl(240, 4%, 30%);
+  --primary: hsl(140, 55%, 42%);
+  --primary-hover: hsl(140, 55%, 36%);
+  --danger: hsl(0, 65%, 50%);
+  --danger-hover: hsl(0, 65%, 42%);
+  --accent: hsl(265, 70%, 65%);
+  --radius: 0.6em;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+:root[data-theme="paper"] {
+  --bg: hsl(40, 30%, 96%);
+  --bg-elevated: hsl(40, 25%, 100%);
+  --surface: hsl(40, 20%, 100%);
+  --surface-hover: hsl(40, 25%, 92%);
+  --border: hsl(40, 15%, 82%);
+  --text: hsl(30, 20%, 15%);
+  --text-muted: hsl(30, 10%, 40%);
+  --correct: hsl(115, 45%, 40%);
+  --present: hsl(40, 85%, 42%);
+  --absent: hsl(40, 8%, 70%);
+  --primary: hsl(140, 50%, 36%);
+  --primary-hover: hsl(140, 50%, 30%);
+  --danger: hsl(0, 60%, 46%);
+  --danger-hover: hsl(0, 60%, 38%);
+  --accent: hsl(265, 55%, 50%);
+  --radius: 0.6em;
+  --shadow: 0 10px 24px rgba(60, 45, 20, 0.12);
+}
+
+:root[data-theme="forest"] {
+  --bg: hsl(150, 25%, 8%);
+  --bg-elevated: hsl(150, 20%, 12%);
+  --surface: hsl(150, 18%, 15%);
+  --surface-hover: hsl(150, 18%, 19%);
+  --border: hsl(150, 15%, 26%);
+  --text: hsl(90, 15%, 92%);
+  --text-muted: hsl(120, 10%, 62%);
+  --correct: hsl(100, 45%, 45%);
+  --present: hsl(55, 70%, 48%);
+  --absent: hsl(150, 8%, 28%);
+  --primary: hsl(100, 45%, 42%);
+  --primary-hover: hsl(100, 45%, 35%);
+  --danger: hsl(10, 65%, 50%);
+  --danger-hover: hsl(10, 65%, 42%);
+  --accent: hsl(45, 70%, 55%);
+  --radius: 0.6em;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+:root[data-theme="ocean"] {
+  --bg: hsl(205, 40%, 9%);
+  --bg-elevated: hsl(205, 35%, 13%);
+  --surface: hsl(205, 30%, 16%);
+  --surface-hover: hsl(205, 30%, 20%);
+  --border: hsl(205, 25%, 28%);
+  --text: hsl(190, 25%, 94%);
+  --text-muted: hsl(200, 15%, 65%);
+  --correct: hsl(150, 45%, 42%);
+  --present: hsl(40, 80%, 52%);
+  --absent: hsl(205, 12%, 30%);
+  --primary: hsl(195, 70%, 45%);
+  --primary-hover: hsl(195, 70%, 38%);
+  --danger: hsl(0, 65%, 52%);
+  --danger-hover: hsl(0, 65%, 44%);
+  --accent: hsl(180, 60%, 50%);
+  --radius: 0.6em;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+:root[data-theme="inferno"] {
+  --bg: hsl(15, 35%, 8%);
+  --bg-elevated: hsl(15, 30%, 12%);
+  --surface: hsl(15, 25%, 15%);
+  --surface-hover: hsl(15, 25%, 19%);
+  --border: hsl(15, 20%, 28%);
+  --text: hsl(25, 20%, 95%);
+  --text-muted: hsl(20, 12%, 65%);
+  --correct: hsl(110, 40%, 42%);
+  --present: hsl(38, 85%, 52%);
+  --absent: hsl(15, 10%, 28%);
+  --primary: hsl(14, 80%, 52%);
+  --primary-hover: hsl(14, 80%, 44%);
+  --danger: hsl(350, 70%, 52%);
+  --danger-hover: hsl(350, 70%, 44%);
+  --accent: hsl(30, 90%, 55%);
+  --radius: 0.6em;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* ==========================================================================
+   Elevation, glow, motion & spatial tokens
+   Derived from the existing per-theme palette above (--bg/--surface/--accent/
+   --primary) via color-mix() so every theme automatically gets a coherent
+   depth/glow system without redefining shadows five times.
+   ========================================================================== */
+:root {
+  --shadow-rgb: 0, 0, 0;
+
+  --elevation-1: 0 1px 2px rgba(var(--shadow-rgb), 0.16), 0 1px 1px rgba(var(--shadow-rgb), 0.10);
+  --elevation-2: 0 6px 16px rgba(var(--shadow-rgb), 0.22), 0 2px 6px rgba(var(--shadow-rgb), 0.14);
+  --elevation-3: 0 16px 40px rgba(var(--shadow-rgb), 0.30), 0 6px 14px rgba(var(--shadow-rgb), 0.18);
+  --elevation-4: 0 28px 72px rgba(var(--shadow-rgb), 0.36), 0 10px 24px rgba(var(--shadow-rgb), 0.22);
+
+  --glow-accent: 0 0 0 1px color-mix(in srgb, var(--accent) 40%, transparent), 0 0 28px color-mix(in srgb, var(--accent) 32%, transparent);
+  --glow-primary: 0 0 0 1px color-mix(in srgb, var(--primary) 40%, transparent), 0 0 28px color-mix(in srgb, var(--primary) 30%, transparent);
+  --void-glow-a: color-mix(in srgb, var(--accent) 20%, transparent);
+  --void-glow-b: color-mix(in srgb, var(--primary) 16%, transparent);
+  --surface-translucent: color-mix(in srgb, var(--bg-elevated) 78%, transparent);
+  --surface-glass: color-mix(in srgb, var(--surface) 70%, transparent);
+  --hairline: color-mix(in srgb, var(--border) 70%, transparent);
+
+  --dur-micro: 150ms;
+  --dur-ui: 280ms;
+  --dur-hero: 600ms;
+  --dur-celebrate: 1100ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --depth-perspective: 1400px;
+  --tilt-max: 8deg;
+
+  --radius-lg: 1.1em;
+  --radius-xl: 1.6em;
+}
+
+:root[data-theme="paper"] {
+  --shadow-rgb: 60, 45, 20;
+}
+
+/* Card/element pointer-tilt, set by the appTilt directive - inert until JS sets it. */
+:root {
+  --tilt-rx: 0deg;
+  --tilt-ry: 0deg;
+  --tilt-px: 50%;
+  --tilt-py: 50%;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --bg: hsl(40, 30%, 96%);
+    --bg-elevated: hsl(40, 25%, 100%);
+    --surface: hsl(40, 20%, 100%);
+    --border: hsl(40, 15%, 82%);
+    --text: hsl(30, 20%, 15%);
+    --text-muted: hsl(30, 10%, 40%);
+  }
+}
+
+[data-high-contrast="true"] {
+  --border: hsl(0, 0%, 55%);
+  --text-muted: hsl(0, 0%, 78%);
+  --correct: hsl(115, 70%, 38%);
+  --present: hsl(45, 100%, 45%);
+  --absent: hsl(240, 0%, 20%);
+}
+[data-high-contrast="true"][data-theme="paper"] {
+  --border: hsl(0, 0%, 30%);
+  --absent: hsl(0, 0%, 55%);
+}
+
+[data-reduced-motion="true"] *,
+[data-reduced-motion="true"] *::before,
+[data-reduced-motion="true"] *::after {
+  animation-duration: 1ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 1ms !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * , *::before, *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+}
+
+/* ==========================================================================
+   Shared component classes (used across multiple feature components)
+   ========================================================================== */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1em;
+  box-shadow: var(--shadow);
+}
+
+.card-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5em;
+}
+
+.section-title {
+  font-size: 1.1em;
+  font-weight: 700;
+  margin-top: 0.2em;
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+.badge {
+  display: inline-block;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 0.2em 0.6em;
+  border-radius: 1em;
+  font-size: 0.75em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.badge.difficulty-easy { color: var(--correct); border-color: var(--correct); }
+.badge.difficulty-medium { color: var(--primary); border-color: var(--primary); }
+.badge.difficulty-hard { color: var(--present); border-color: var(--present); }
+.badge.difficulty-extreme { color: var(--danger); border-color: var(--danger); }
+.badge.difficulty-custom { color: var(--accent); border-color: var(--accent); }
+
+.btn {
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.7em 1.2em;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 0.95em;
+  transition: transform 100ms ease, background-color 120ms ease;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+}
+
+.btn-secondary {
+  background: var(--surface-hover);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.btn-danger {
+  background: var(--danger);
+  color: white;
+}
+
+.btn-danger:hover {
+  background: var(--danger-hover);
+}
+
+.btn-block {
+  width: 100%;
+  margin-top: 0.8em;
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0.2em;
+  font-size: 0.9em;
+}
+
+.back-btn {
+  align-self: flex-start;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ==========================================================================
+   App shell / layout
+   ========================================================================== */
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-main {
+  flex: 1;
+  width: 100%;
+  max-width: 46em;
+  margin: 0 auto;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+@media (min-width: 1024px) {
+  .app-main {
+    max-width: 56em;
+  }
+}
+
+@media (max-width: 720px) {
+  .app-main {
+    padding-bottom: 6rem;
+  }
+}
+
+/* ==========================================================================
+   Route transition (native View Transitions API, see withViewTransitions())
+   ========================================================================== */
+@keyframes routeFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+::view-transition-old(root) {
+  animation: 140ms ease both routeFadeOut;
+}
+
+::view-transition-new(root) {
+  animation: 200ms ease both routeFadeIn;
+}
+
+@keyframes routeFadeOut {
+  to { opacity: 0; transform: translateY(-6px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}
+
+/* ==========================================================================
+   Alerts
+   ========================================================================== */
+.alert-container {
+  position: fixed;
+  top: 5em;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+}
+
+.alert {
+  pointer-events: none;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.6em 0.9em;
+  border-radius: var(--radius);
+  opacity: 1;
+  transition: opacity 400ms ease;
+  margin-bottom: 0.5em;
+  font-weight: 600;
+  box-shadow: var(--shadow);
+}
+
+.alert.hide {
+  opacity: 0;
+}
+
+/* ==========================================================================
+   Modal content shared across How-to/Result/Confirm modals
+   ========================================================================== */
+.modal-actions {
+  display: flex;
+  gap: 0.6em;
+  justify-content: flex-end;
+  margin-top: 0.4em;
+}
+
+.howto-example {
+  margin-bottom: 0.6em;
+}
+
+.howto-row {
+  display: flex;
+  gap: 0.25em;
+  margin-bottom: 0.4em;
+}
+
+.howto-row .tile {
+  --tile-size: 2.2rem;
+  width: var(--tile-size);
+  height: var(--tile-size);
+  font-size: calc(var(--tile-size) * 0.5);
+  color: var(--text);
+  border: 0.06em solid var(--border);
+  text-transform: uppercase;
+  font-weight: 800;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.15em;
+}
+
+.howto-row .tile[data-state="correct"] {
+  border: none;
+  background-color: var(--correct);
+  color: white;
+}
+
+.howto-row .tile[data-state="present"] {
+  border: none;
+  background-color: var(--present);
+  color: hsl(0, 0%, 10%);
+}
+
+.howto-row .tile[data-state="absent"] {
+  border: none;
+  background-color: var(--absent);
+}
+
+.result-rewards {
+  display: flex;
+  gap: 0.6em;
+  flex-wrap: wrap;
+  margin: 0.6em 0;
+}
+
+.result-reward-pill {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 2em;
+  padding: 0.4em 0.8em;
+  font-weight: 700;
+  font-size: 0.85em;
+  animation: rewardPop 320ms cubic-bezier(0.2, 0.8, 0.3, 1.2);
+}
+
+@keyframes rewardPop {
+  from { opacity: 0; transform: scale(0.6); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* ==========================================================================
+   Spatial surfaces: tilt + cursor-glow utilities consumed by [appTilt] hosts
+   ========================================================================== */
+.tilt-surface {
+  transform: perspective(var(--depth-perspective)) rotateX(var(--tilt-rx)) rotateY(var(--tilt-ry)) translateZ(0);
+  transition: transform var(--dur-ui) var(--ease-out), box-shadow var(--dur-ui) var(--ease-out);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.tilt-glow {
+  position: relative;
+  isolation: isolate;
+}
+
+.tilt-glow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(320px circle at var(--tilt-px) var(--tilt-py), color-mix(in srgb, var(--accent) 16%, transparent), transparent 60%);
+  opacity: 0;
+  transition: opacity var(--dur-ui) var(--ease-out);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.tilt-glow:hover::before,
+.tilt-glow:focus-within::before {
+  opacity: 1;
+}
+
+.result-share-text {
+  white-space: pre;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.6em;
+  font-size: 1.1em;
+  text-align: center;
+  line-height: 1.3;
+}

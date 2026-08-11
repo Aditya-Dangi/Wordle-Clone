@@ -1,0 +1,60 @@
+@if (session(); as s) {
+  <div class="play-header">
+    <button class="icon-btn" type="button" aria-label="Back to home" (click)="goBack()">&larr;</button>
+    <div class="play-info">
+      <strong>{{ modeName() }}</strong>
+      <span [class]="'badge difficulty-' + s.difficulty">{{ difficultyLabel() }}</span>
+    </div>
+    <div class="play-meta">
+      @if (s.timerText) {
+        <span class="timer-display" [class.low]="s.timerLow">{{ s.timerText }}</span>
+      }
+      <span class="coins-display">💎 {{ coins().coins }}</span>
+    </div>
+  </div>
+
+  @if (s.candidateInfo) {
+    <div class="candidate-info">{{ s.candidateInfo }}</div>
+  }
+
+  <app-board
+    [boards]="s.boards"
+    [wordLength]="s.wordLength"
+    [maxGuesses]="s.maxGuesses"
+    [interactive]="s.mode === 'reverse'"
+    (tileClicked)="onTileClick($event)"
+  ></app-board>
+
+  @if (s.mode === 'reverse') {
+    <div class="hint-bar">
+      <div class="muted reverse-hint">Tap tiles to cycle gray → yellow → green to match your secret word, then submit.</div>
+      <button type="button" class="hint-btn" (click)="game.submitReverseFeedback()">Submit Feedback</button>
+    </div>
+  } @else {
+    @if (s.hintsEnabled) {
+      <div class="hint-bar">
+        @for (h of HINTS; track h.id) {
+          <button type="button" class="hint-btn" (click)="game.useHint(h.id, h.cost)">{{ h.label }} ({{ h.cost }}💎)</button>
+        }
+        <button type="button" class="hint-btn" [class.active]="s.wordIntelOn" (click)="game.toggleWordIntel()">💡 Word Intelligence</button>
+      </div>
+    }
+    <app-keyboard
+      [keyRanks]="s.keyRanks"
+      [disabled]="s.locked || !s.active"
+      (keyPress)="game.pressKey($event)"
+      (enter)="game.submitGuess()"
+      (backspace)="game.deleteKey()"
+    ></app-keyboard>
+  }
+
+  <div class="play-actions">
+    @if (s.active) {
+      <button class="action-btn secondary" type="button" (click)="onGiveUp()">Give Up</button>
+    } @else {
+      <button class="action-btn primary" type="button" (click)="onRestart()">Play Again</button>
+    }
+  </div>
+}
+
+<app-result-modal></app-result-modal>

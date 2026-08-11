@@ -1,0 +1,39 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
+}
+
+.setup-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+}
+
+.setup-icon {
+  font-size: 2em;
+}
+
+.setup-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9em;
+  margin-top: 0.6em;
+}
+
+.challenge-rating {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4em;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.6em 0.9em;
+  margin-top: 0.4em;
+}
+
+.challenge-rating strong {
+  font-size: 1.4em;
+  color: var(--accent);
+  transition: color 200ms ease;
+}

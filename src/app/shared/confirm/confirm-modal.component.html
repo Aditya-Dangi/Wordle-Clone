@@ -1,0 +1,10 @@
+<app-modal [open]="open()" [small]="true" labelledBy="confirm-title" (closed)="cancel()">
+  @if (request(); as req) {
+    <h2 id="confirm-title">{{ req.title }}</h2>
+    <p>{{ req.body }}</p>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" type="button" (click)="cancel()">Cancel</button>
+      <button class="btn btn-danger" type="button" (click)="confirm()">Confirm</button>
+    </div>
+  }
+</app-modal>

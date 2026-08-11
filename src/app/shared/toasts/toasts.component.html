@@ -1,0 +1,14 @@
+<div class="alert-container">
+  @for (a of alerts(); track a.id) {
+    <div class="alert" [class.hide]="a.hiding">{{ a.message }}</div>
+  }
+</div>
+
+<div class="achievement-toast-container">
+  @for (a of achievements(); track a.id) {
+    <div class="achievement-toast">
+      <span class="achievement-icon">{{ a.icon }}</span>
+      <div><strong>Achievement Unlocked</strong><span>{{ a.name }}</span></div>
+    </div>
+  }
+</div>

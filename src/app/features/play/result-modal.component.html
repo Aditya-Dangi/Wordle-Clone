@@ -1,0 +1,22 @@
+<app-modal [open]="open()" labelledBy="result-modal-title" (closed)="continue()">
+  @if (result(); as r) {
+    <h2 id="result-modal-title">{{ r.title }}</h2>
+    <p>{{ r.summary }}</p>
+    @if (r.answers) {
+      <p class="muted">Answer{{ r.answers.length > 1 ? 's' : '' }}: {{ r.answers.join(', ') }}</p>
+    }
+    <div class="result-rewards">
+      <span class="result-reward-pill">+{{ r.rewardXp }} XP</span>
+      <span class="result-reward-pill">💎 +{{ r.rewardCoins }}</span>
+      @if (r.leveledUp) {
+        <span class="result-reward-pill">🎉 Level {{ r.newLevel }}!</span>
+      }
+    </div>
+    <div class="modal-actions">
+      @if (r.canShare) {
+        <button class="btn btn-secondary" type="button" (click)="share()">Share Result</button>
+      }
+      <button class="btn btn-primary" type="button" (click)="continue()">Continue</button>
+    </div>
+  }
+</app-modal>

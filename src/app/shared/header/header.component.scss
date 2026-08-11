@@ -1,0 +1,201 @@
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: var(--surface-translucent);
+  backdrop-filter: blur(18px) saturate(1.4);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  border-bottom: 1px solid var(--hairline);
+  transition: box-shadow var(--dur-ui) var(--ease-out), border-color var(--dur-ui) var(--ease-out);
+}
+
+.app-header.scrolled {
+  box-shadow: var(--elevation-2);
+  border-bottom-color: var(--border);
+}
+
+.header-inner {
+  max-width: 68rem;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  padding: 0.85em 1.2em;
+  transition: padding var(--dur-ui) var(--ease-out);
+}
+
+.app-header.scrolled .header-inner {
+  padding: 0.5em 1.2em;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.55em;
+}
+
+.brand-mark {
+  display: flex;
+  perspective: 400px;
+}
+
+.brand-tile {
+  width: 2em;
+  height: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.05em;
+  color: white;
+  border-radius: 0.45em;
+  background: linear-gradient(155deg, var(--correct), color-mix(in srgb, var(--correct) 65%, black));
+  box-shadow: var(--elevation-1);
+  transform: rotateY(0deg);
+  transition: transform 600ms var(--ease-spring);
+}
+
+.brand-mark:hover .brand-tile {
+  transform: rotateY(180deg);
+}
+
+.brand h1 {
+  font-size: 1.2em;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 800;
+}
+
+.main-nav {
+  display: flex;
+  gap: 0.2em;
+  margin-left: 0.6em;
+  flex-wrap: wrap;
+  background: color-mix(in srgb, var(--bg) 55%, transparent);
+  border: 1px solid var(--hairline);
+  border-radius: 2em;
+  padding: 0.25em;
+}
+
+.nav-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-weight: 600;
+  padding: 0.5em 0.9em;
+  border-radius: 2em;
+  cursor: pointer;
+  font-size: 0.85em;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  transition: background-color var(--dur-ui) var(--ease-out), color var(--dur-ui) var(--ease-out);
+}
+
+.nav-btn:hover {
+  color: var(--text);
+}
+
+.nav-btn.active {
+  background: var(--primary);
+  color: white;
+}
+
+.header-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.hud-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.45em;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: 2em;
+  padding: 0.35em 0.75em;
+  font-size: 0.85em;
+  box-shadow: var(--elevation-1);
+}
+
+.hud-chip-icon {
+  font-size: 1em;
+}
+
+.hud-chip-value {
+  font-weight: 800;
+}
+
+.streak-chip .hud-chip-value {
+  color: var(--present);
+}
+
+.level-chip .hud-chip-value {
+  color: var(--primary);
+}
+
+.xp-bar {
+  width: 4em;
+  height: 0.4em;
+  background: var(--bg);
+  border-radius: 1em;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.xp-fill {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  width: 0%;
+  transition: width 400ms var(--ease-out);
+}
+
+.coins-chip .hud-chip-value {
+  color: var(--accent);
+}
+
+.icon-btn {
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  color: var(--text);
+  width: 2.3em;
+  height: 2.3em;
+  border-radius: 50%;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1em;
+  transition: background-color var(--dur-ui) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+}
+
+.icon-btn:hover {
+  background: var(--surface-hover);
+}
+
+.icon-btn:active {
+  transform: scale(0.92);
+}
+
+@media (max-width: 720px) {
+  .main-nav {
+    display: none;
+  }
+  .brand h1 {
+    display: none;
+  }
+  .streak-chip .hud-chip-icon,
+  .coins-chip .hud-chip-icon {
+    display: none;
+  }
+  .hud-chip {
+    padding: 0.3em 0.55em;
+    font-size: 0.78em;
+  }
+  .xp-bar {
+    width: 2.6em;
+  }
+}

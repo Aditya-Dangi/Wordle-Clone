@@ -1,0 +1,135 @@
+<section class="hero tilt-surface" [appTilt]="4">
+  <div class="hero-copy">
+    <span class="hero-eyebrow">Today's Challenge</span>
+    <div class="hero-title-row">
+      <h1 class="hero-title">Puzzle <span class="hero-puzzle-num">#{{ puzzleNumber() }}</span></h1>
+      @if (live.solvingNow(); as n) {
+        <span class="live-pill">
+          <span class="live-dot"></span>
+          LIVE · {{ n | number }} solving
+        </span>
+      }
+    </div>
+    <p class="hero-sub">One shared puzzle for everyone today.</p>
+
+    <div class="hero-progress">
+      <div class="hero-progress-label">
+        <span>Global progress</span>
+        <span>{{ live.globalProgress() }}%</span>
+      </div>
+      <div class="hero-progress-track">
+        <div class="hero-progress-fill" [style.width.%]="live.globalProgress()"></div>
+      </div>
+    </div>
+
+    @if (daily().completed) {
+      <p class="hero-status">
+        @if (daily().won) {
+          Solved in {{ daily().guessCount }}/6 guesses. Come back tomorrow!
+        } @else {
+          Missed today's word. Come back tomorrow!
+        }
+      </p>
+      <button class="btn btn-primary hero-cta" type="button" disabled>Completed for Today</button>
+    } @else {
+      <button class="btn btn-primary hero-cta" type="button" (click)="playDaily()">Play Daily Challenge</button>
+    }
+  </div>
+
+  <div class="hero-visual">
+    <app-word-core [state]="coreState()"></app-word-core>
+  </div>
+</section>
+
+<section class="card live-feed-card">
+  <div class="card-header-row">
+    <h2 class="section-title">Live Activity</h2>
+    <span class="live-pill live-pill-small"><span class="live-dot"></span>LIVE</span>
+  </div>
+  <ul class="live-feed">
+    @for (item of live.feed(); track item.id) {
+      <li class="live-feed-item">{{ item.text }}</li>
+    }
+  </ul>
+</section>
+
+<section class="progression">
+  <div class="card level-card tilt-surface tilt-glow" [appTilt]="4">
+    <div class="level-card-top">
+      <span class="level-big">LV {{ profile().level }}</span>
+      <span class="level-xp">{{ profile().xp }} / {{ xpToNext() }} XP</span>
+    </div>
+    <div class="level-track">
+      <div class="level-fill" [style.width.%]="xpPercent()"></div>
+    </div>
+    <span class="level-next">{{ xpToNext() - profile().xp }} XP to Level {{ profile().level + 1 }}</span>
+  </div>
+
+  <div class="stat-grid">
+    @for (stat of statCards(); track stat.label) {
+      <div class="stat-card tilt-surface tilt-glow" [appTilt]="6">
+        <div class="stat-card-top">
+          <span class="stat-icon">{{ stat.icon }}</span>
+          <span class="stat-label">{{ stat.label }}</span>
+        </div>
+        <span class="stat-value">{{ stat.value }}</span>
+        <div class="stat-card-bottom">
+          <span class="stat-sub">{{ stat.sub }}</span>
+          @if (stat.spark && stat.spark.length > 1) {
+            <svg class="stat-spark" viewBox="0 0 100 24" preserveAspectRatio="none" aria-hidden="true">
+              <polyline [attr.points]="sparkPoints(stat.spark)"></polyline>
+            </svg>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</section>
+
+<section>
+  <h2 class="section-title">Game Modes</h2>
+  <div class="mode-grid">
+    @for (mode of modeList; track mode.key) {
+      <app-mode-card [mode]="mode" (activated)="openSetup(mode.key)"></app-mode-card>
+    }
+  </div>
+</section>
+
+<section class="card missions-card">
+  <h2>Daily Missions</h2>
+  <ul class="missions-list">
+    @for (m of missions().list; track m.id) {
+      <li>
+        <span class="mission-check" [class.done]="isMissionDone(m.id)">{{ isMissionDone(m.id) ? '✓' : '' }}</span>
+        <div class="mission-body">
+          <div class="mission-desc-row">
+            <span class="mission-desc" [class.done]="isMissionDone(m.id)">{{ m.label }}</span>
+            <span class="mission-reward">+{{ m.reward.xp }} XP</span>
+          </div>
+          <div class="mission-track">
+            <div class="mission-fill" [class.done]="isMissionDone(m.id)" [style.width.%]="missionProgress(m.id)"></div>
+          </div>
+        </div>
+      </li>
+    }
+  </ul>
+</section>
+
+<section class="card achievements-teaser">
+  <div class="card-header-row">
+    <h2>Achievements</h2>
+    <a class="link-btn" routerLink="/achievements">View all</a>
+  </div>
+  <div class="achievements-teaser-row">
+    @for (a of achievementsTeaser(); track a.id) {
+      <app-achievement-badge
+        class="teaser-badge"
+        [icon]="a.icon"
+        [name]="a.name"
+        [locked]="a.locked"
+        [rarity]="a.rarity"
+        [compact]="true"
+      ></app-achievement-badge>
+    }
+  </div>
+</section>

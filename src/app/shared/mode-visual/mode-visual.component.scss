@@ -1,0 +1,95 @@
+:host {
+  display: block;
+}
+
+.mv-stage {
+  position: relative;
+  width: 3.6rem;
+  height: 3.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+}
+
+.mv-backdrop {
+  position: absolute;
+  inset: -25%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--primary) 30%, transparent), transparent 72%);
+  filter: blur(2px);
+  transition: background var(--dur-ui) var(--ease-out);
+}
+
+.mv-shape {
+  position: absolute;
+  inset: 0.35rem;
+  border-radius: 0.7rem;
+  background: linear-gradient(155deg, var(--surface), var(--bg-elevated));
+  border: 1px solid var(--hairline);
+  box-shadow: var(--elevation-1);
+  transform: translateZ(0.2rem) rotate(-6deg);
+  transition: transform var(--dur-ui) var(--ease-out), border-color var(--dur-ui) var(--ease-out);
+}
+
+.mv-shape-b {
+  transform: translateZ(0.1rem) rotate(6deg) scale(0.86);
+  opacity: 0.85;
+}
+
+.mv-shape-c {
+  transform: translateZ(0rem) rotate(16deg) scale(0.72);
+  opacity: 0.7;
+}
+
+.mv-icon {
+  position: relative;
+  z-index: 1;
+  font-size: 1.5rem;
+  transform: translateZ(1.1rem);
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.35));
+  transition: transform var(--dur-ui) var(--ease-out);
+}
+
+.mv-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(var(--accent) 0deg, transparent 300deg, var(--accent) 360deg);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px));
+  animation: mvRingSpin 3.5s linear infinite;
+}
+
+@keyframes mvRingSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* ---- per-mode accents ---- */
+.mv-stage[data-mode="classic"] .mv-backdrop { background: radial-gradient(closest-side, color-mix(in srgb, var(--primary) 32%, transparent), transparent 72%); }
+.mv-stage[data-mode="daily"] .mv-backdrop { background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 32%, transparent), transparent 72%); }
+.mv-stage[data-mode="endless"] .mv-backdrop { background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 32%, transparent), transparent 72%); }
+.mv-stage[data-mode="endless"] .mv-shape { border-radius: 50%; }
+.mv-stage[data-mode="blitz"] .mv-backdrop { background: radial-gradient(closest-side, color-mix(in srgb, var(--present) 36%, transparent), transparent 72%); }
+.mv-stage[data-mode="blitz"] .mv-shape { clip-path: polygon(55% 0, 20% 55%, 45% 55%, 30% 100%, 80% 40%, 52% 40%); }
+.mv-stage[data-mode="timeAttack"] .mv-backdrop { background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 32%, transparent), transparent 72%); }
+.mv-stage[data-mode="timeAttack"] .mv-shape { border-radius: 50%; }
+.mv-stage[data-mode="survival"] .mv-backdrop { background: radial-gradient(closest-side, color-mix(in srgb, var(--correct) 32%, transparent), transparent 72%); }
+.mv-stage[data-mode="survival"] .mv-shape { clip-path: polygon(50% 0%, 100% 20%, 100% 60%, 50% 100%, 0% 60%, 0% 20%); }
+.mv-stage[data-mode="marathon"] .mv-backdrop { background: radial-gradient(closest-side, color-mix(in srgb, var(--primary) 32%, transparent), transparent 72%); }
+.mv-stage[data-mode="suddenDeath"] .mv-backdrop { background: radial-gradient(closest-side, color-mix(in srgb, var(--danger) 34%, transparent), transparent 72%); }
+.mv-stage[data-mode="suddenDeath"] .mv-shape { clip-path: polygon(0 0, 45% 0, 55% 30%, 40% 45%, 100% 45%, 100% 100%, 0 100%); border-color: color-mix(in srgb, var(--danger) 50%, var(--hairline)); }
+.mv-stage[data-mode="multiword2"] .mv-backdrop,
+.mv-stage[data-mode="multiword3"] .mv-backdrop,
+.mv-stage[data-mode="multiword4"] .mv-backdrop { background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 32%, transparent), transparent 72%); }
+.mv-stage[data-mode="reverse"] .mv-backdrop { background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 34%, transparent), transparent 72%); }
+.mv-stage[data-mode="reverse"] .mv-shape { animation: mvFlip 5s ease-in-out infinite; }
+.mv-stage[data-mode="custom"] .mv-backdrop { background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 30%, transparent), transparent 72%); }
+.mv-stage[data-mode="custom"] .mv-shape { border-radius: 0.4rem; }
+.mv-stage[data-mode="custom"] .mv-shape-b { border-radius: 0.4rem; }
+.mv-stage[data-mode="custom"] .mv-shape-c { border-radius: 0.4rem; }
+
+@keyframes mvFlip {
+  0%, 100% { transform: translateZ(0.2rem) rotate(-6deg) rotateY(0deg); }
+  50% { transform: translateZ(0.2rem) rotate(-6deg) rotateY(180deg); }
+}

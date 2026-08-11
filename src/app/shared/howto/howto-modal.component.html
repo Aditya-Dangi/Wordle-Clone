@@ -1,0 +1,27 @@
+<app-modal [open]="open()" labelledBy="howto-title" (closed)="close()">
+  <h2 id="howto-title">How to Play</h2>
+  <p>Guess the word. After each guess, the color of the tiles changes to show how close you were.</p>
+  <div class="howto-example">
+    <div class="howto-row">
+      <div class="tile" data-state="correct">W</div>
+      <div class="tile">O</div><div class="tile">R</div><div class="tile">D</div><div class="tile">Y</div>
+    </div>
+    <p><strong>W</strong> is in the word and in the correct spot.</p>
+  </div>
+  <div class="howto-example">
+    <div class="howto-row">
+      <div class="tile">L</div>
+      <div class="tile" data-state="present">I</div>
+      <div class="tile">G</div><div class="tile">H</div><div class="tile">T</div>
+    </div>
+    <p><strong>I</strong> is in the word but in the wrong spot.</p>
+  </div>
+  <div class="howto-example">
+    <div class="howto-row">
+      <div class="tile">R</div><div class="tile">O</div><div class="tile">G</div>
+      <div class="tile" data-state="absent">U</div><div class="tile">E</div>
+    </div>
+    <p><strong>U</strong> is not in the word in any spot.</p>
+  </div>
+  <button class="btn btn-primary btn-block" type="button" (click)="close()">Got it</button>
+</app-modal>

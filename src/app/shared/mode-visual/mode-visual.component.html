@@ -1,0 +1,14 @@
+<div class="mv-stage" [attr.data-mode]="mode()" aria-hidden="true">
+  <div class="mv-backdrop"></div>
+  <div class="mv-shape"></div>
+  @if (boards() >= 3) {
+    <div class="mv-shape mv-shape-b"></div>
+  }
+  @if (boards() >= 4) {
+    <div class="mv-shape mv-shape-c"></div>
+  }
+  @if (mode() === 'timeAttack') {
+    <div class="mv-ring"></div>
+  }
+  <span class="mv-icon">{{ icon() }}</span>
+</div>

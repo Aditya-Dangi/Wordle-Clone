@@ -1,0 +1,9 @@
+<div class="achievements-header">
+  <h2 class="section-title">Achievements</h2>
+  <span class="achievements-count">{{ unlockedCount() }} / {{ total }} unlocked</span>
+</div>
+<div class="achievements-grid">
+  @for (a of items(); track a.id) {
+    <app-achievement-badge [icon]="a.icon" [name]="a.name" [description]="a.desc" [locked]="a.locked" [rarity]="a.rarity"></app-achievement-badge>
+  }
+</div>

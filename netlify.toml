@@ -1,0 +1,14 @@
+[build]
+  command = "npm run build"
+  publish = "dist/wordle-ng/browser"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Angular Router uses client-side (HTML5 pushState) routing, so every path must
+# fall back to index.html and let Angular resolve the route - otherwise a hard
+# refresh or a direct link to e.g. /stats or /setup/classic 404s on Netlify.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

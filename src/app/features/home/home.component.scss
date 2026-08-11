@@ -1,0 +1,432 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4em;
+}
+
+/* ==========================================================================
+   Hero
+   ========================================================================== */
+.hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  align-items: center;
+  gap: 1.5em;
+  padding: 1.8em;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(150deg, var(--bg-elevated), var(--surface) 70%);
+  border: 1px solid var(--hairline);
+  box-shadow: var(--elevation-3);
+  overflow: hidden;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 70% at 100% 0%, var(--void-glow-a), transparent 65%);
+  pointer-events: none;
+}
+
+.hero-copy {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
+}
+
+.hero-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.78em;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.hero-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.8em;
+  flex-wrap: wrap;
+}
+
+.hero-title {
+  font-size: 1.9em;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.hero-puzzle-num {
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.hero-sub {
+  color: var(--text-muted);
+}
+
+.live-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  background: color-mix(in srgb, var(--correct) 16%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--correct) 45%, var(--hairline));
+  color: var(--correct);
+  border-radius: 2em;
+  padding: 0.3em 0.7em;
+  font-size: 0.72em;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.live-dot {
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 50%;
+  background: var(--correct);
+  animation: liveDotPulse 1.6s ease-in-out infinite;
+}
+
+@keyframes liveDotPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.45; transform: scale(0.75); }
+}
+
+.hero-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+  width: 100%;
+  max-width: 22em;
+}
+
+.hero-progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78em;
+  color: var(--text-muted);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.hero-progress-track {
+  height: 0.5em;
+  background: var(--bg);
+  border: 1px solid var(--hairline);
+  border-radius: 1em;
+  overflow: hidden;
+}
+
+.hero-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  border-radius: 1em;
+  transition: width 600ms var(--ease-out);
+}
+
+.hero-status {
+  color: var(--text-muted);
+}
+
+.hero-cta {
+  align-self: flex-start;
+  margin-top: 0.3em;
+  font-size: 1.02em;
+  padding: 0.8em 1.6em;
+  box-shadow: var(--glow-primary);
+}
+
+.hero-visual {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 860px) {
+  .hero {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 1.4em;
+  }
+  .hero-copy {
+    align-items: center;
+  }
+  .hero-title-row {
+    justify-content: center;
+  }
+  .hero-cta {
+    align-self: center;
+  }
+  .hero-visual {
+    order: -1;
+  }
+}
+
+/* ==========================================================================
+   Live activity feed
+   ========================================================================== */
+.live-feed-card {
+  overflow: hidden;
+}
+
+.live-pill-small {
+  font-size: 0.65em;
+}
+
+.live-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.live-feed-item {
+  padding: 0.5em 0.7em;
+  background: var(--bg);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
+  font-size: 0.85em;
+  color: var(--text-muted);
+  animation: feedIn 320ms var(--ease-out);
+}
+
+@keyframes feedIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   Progression
+   ========================================================================== */
+.progression {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8em;
+}
+
+.level-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.level-card-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.level-big {
+  font-size: 1.4em;
+  font-weight: 800;
+  color: var(--primary);
+  letter-spacing: 0.02em;
+}
+
+.level-xp {
+  font-weight: 700;
+  color: var(--text-muted);
+  font-size: 0.85em;
+}
+
+.level-track {
+  height: 0.7em;
+  background: var(--bg);
+  border: 1px solid var(--hairline);
+  border-radius: 1em;
+  overflow: hidden;
+}
+
+.level-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  border-radius: 1em;
+  transition: width 600ms var(--ease-out);
+}
+
+.level-next {
+  font-size: 0.75em;
+  color: var(--text-muted);
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9.5em, 1fr));
+  gap: 0.7em;
+}
+
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  padding: 0.85em;
+  box-shadow: var(--elevation-1);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35em;
+}
+
+.stat-card-top {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+}
+
+.stat-icon {
+  font-size: 1.1em;
+}
+
+.stat-label {
+  font-size: 0.72em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.stat-value {
+  font-size: 1.5em;
+  font-weight: 800;
+}
+
+.stat-card-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5em;
+}
+
+.stat-sub {
+  font-size: 0.72em;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.stat-spark {
+  width: 3.2em;
+  height: 1.3em;
+  flex-shrink: 0;
+}
+
+.stat-spark polyline {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ==========================================================================
+   Game modes
+   ========================================================================== */
+.mode-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11em, 1fr));
+  gap: 0.8em;
+  margin-top: 0.6em;
+}
+
+/* ==========================================================================
+   Missions
+   ========================================================================== */
+.missions-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6em;
+  padding: 0.6em 0;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.missions-list li:last-child {
+  border-bottom: none;
+}
+
+.mission-check {
+  width: 1.3em;
+  height: 1.3em;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8em;
+  flex-shrink: 0;
+  margin-top: 0.15em;
+  transition: background-color var(--dur-ui) var(--ease-out), border-color var(--dur-ui) var(--ease-out);
+}
+
+.mission-check.done {
+  background: var(--correct);
+  border-color: var(--correct);
+  color: white;
+}
+
+.mission-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35em;
+}
+
+.mission-desc-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.6em;
+}
+
+.mission-desc.done {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.mission-reward {
+  font-size: 0.8em;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.mission-track {
+  height: 0.4em;
+  background: var(--bg);
+  border: 1px solid var(--hairline);
+  border-radius: 1em;
+  overflow: hidden;
+}
+
+.mission-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  border-radius: 1em;
+  transition: width 500ms var(--ease-out);
+}
+
+.mission-fill.done {
+  background: var(--correct);
+}
+
+/* ==========================================================================
+   Achievements teaser
+   ========================================================================== */
+.achievements-teaser-row {
+  display: flex;
+  gap: 0.6em;
+  overflow-x: auto;
+  padding-bottom: 0.2em;
+}
+
+.teaser-badge {
+  flex-shrink: 0;
+  width: 7em;
+}
+
+@media (max-width: 480px) {
+  .stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

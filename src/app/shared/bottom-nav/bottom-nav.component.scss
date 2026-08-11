@@ -1,0 +1,77 @@
+.bottom-nav {
+  display: none;
+}
+
+@media (max-width: 720px) {
+  .bottom-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    position: fixed;
+    left: 0.6em;
+    right: 0.6em;
+    bottom: 0.6em;
+    z-index: 40;
+    padding: 0.4em 0.4em calc(0.4em + env(safe-area-inset-bottom, 0px));
+    background: var(--surface-translucent);
+    backdrop-filter: blur(20px) saturate(1.4);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--elevation-3);
+  }
+}
+
+.bn-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15em;
+  text-decoration: none;
+  color: var(--text-muted);
+  min-width: 44px;
+  min-height: 44px;
+  justify-content: center;
+  border-radius: var(--radius);
+  transition: color var(--dur-ui) var(--ease-out);
+}
+
+.bn-icon {
+  font-size: 1.2em;
+}
+
+.bn-label {
+  font-size: 0.62em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.bn-item.active {
+  color: var(--text);
+}
+
+.bn-play {
+  border: none;
+  cursor: pointer;
+  width: 3.2em;
+  height: 3.2em;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(155deg, var(--correct), color-mix(in srgb, var(--correct) 65%, black));
+  box-shadow: var(--elevation-2), 0 0 0 4px var(--bg);
+  transform: translateY(-0.7em);
+  transition: transform var(--dur-micro) var(--ease-out);
+}
+
+.bn-play:active {
+  transform: translateY(-0.7em) scale(0.92);
+}
+
+.bn-play-tile {
+  color: white;
+  font-weight: 800;
+  font-size: 1.2em;
+}
