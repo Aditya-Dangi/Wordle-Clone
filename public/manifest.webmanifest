@@ -2,7 +2,7 @@
   "name": "Wordle",
   "short_name": "Wordle",
   "description": "A polished Wordle-inspired word game with difficulty tiers, 13 game modes, and full progression.",
-  "start_url": "/",
+  "start_url": ".",
   "display": "standalone",
   "background_color": "#121213",
   "theme_color": "#121213",
