@@ -45,7 +45,15 @@ export class SetupComponent {
   ];
   readonly blitzTimerChoices = (MODES.blitz.timerOptions || [30, 60, 120]).map((t) => ({ value: t, label: `${t}s` }));
 
-  readonly categoryChoices = computed(() => [{ value: 'any', label: 'Any' }, ...this.words.categories().map((c) => ({ value: c, label: capitalize(c) }))]);
+  /** Only categories that actually have words at the currently selected length - the
+   * dictionary now carries categorized words for every supported length, not just 5. */
+  readonly categoryChoices = computed(() => {
+    const len = this.selections().wordLength;
+    const cats = this.words.categories().filter((c) => this.words.categoryWords(c, len).length > 0);
+    return [{ value: 'any', label: 'Any' }, ...cats.map((c) => ({ value: c, label: capitalize(c) }))];
+  });
+
+  readonly categoryAvailable = computed(() => this.categoryChoices().length > 1);
 
   readonly challengeRating = computed(() => this.engine.computeChallengeRating(this.selections().mods));
 
@@ -55,7 +63,10 @@ export class SetupComponent {
 
   setWordLength(v: string | number): void {
     const wordLength = Number(v);
-    this.selections.update((s) => ({ ...s, wordLength, category: wordLength === 5 ? s.category : 'any' }));
+    this.selections.update((s) => {
+      const categoryStillValid = s.category === 'any' || this.words.categoryWords(s.category, wordLength).length > 0;
+      return { ...s, wordLength, category: categoryStillValid ? s.category : 'any' };
+    });
   }
 
   setCategory(v: string | number): void {

@@ -10,21 +10,21 @@
       @case ('classic') {
         <app-option-chip-group label="Difficulty" [choices]="difficultyChoices" [selected]="selections().difficulty" (selectedChange)="setDifficulty($event)"></app-option-chip-group>
         <app-option-chip-group label="Word Length" [choices]="wordLengthChoices" [selected]="selections().wordLength" (selectedChange)="setWordLength($event)"></app-option-chip-group>
-        @if (selections().wordLength === 5) {
+        @if (categoryAvailable()) {
           <app-option-chip-group label="Category" [choices]="categoryChoices()" [selected]="selections().category" (selectedChange)="setCategory($event)"></app-option-chip-group>
         }
       }
       @case ('endless') {
         <app-option-chip-group label="Difficulty" [choices]="difficultyChoices" [selected]="selections().difficulty" (selectedChange)="setDifficulty($event)"></app-option-chip-group>
         <app-option-chip-group label="Word Length" [choices]="wordLengthChoices" [selected]="selections().wordLength" (selectedChange)="setWordLength($event)"></app-option-chip-group>
-        @if (selections().wordLength === 5) {
+        @if (categoryAvailable()) {
           <app-option-chip-group label="Category" [choices]="categoryChoices()" [selected]="selections().category" (selectedChange)="setCategory($event)"></app-option-chip-group>
         }
       }
       @case ('timeAttack') {
         <app-option-chip-group label="Difficulty" [choices]="difficultyChoices" [selected]="selections().difficulty" (selectedChange)="setDifficulty($event)"></app-option-chip-group>
         <app-option-chip-group label="Word Length" [choices]="wordLengthChoices" [selected]="selections().wordLength" (selectedChange)="setWordLength($event)"></app-option-chip-group>
-        @if (selections().wordLength === 5) {
+        @if (categoryAvailable()) {
           <app-option-chip-group label="Category" [choices]="categoryChoices()" [selected]="selections().category" (selectedChange)="setCategory($event)"></app-option-chip-group>
         }
       }

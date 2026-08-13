@@ -168,8 +168,8 @@ export class GameService {
 
   private buildAnswerPool(wordLength: number, category: string, extreme: boolean): string[] {
     const pool = extreme ? this.modes.extremeAnswerPool(wordLength) : this.modes.getAnswerPool(wordLength);
-    if (category && category !== 'any' && wordLength === 5) {
-      const set = new Set(this.words.categoryWords(category, 5));
+    if (category && category !== 'any') {
+      const set = new Set(this.words.categoryWords(category, wordLength));
       const filtered = pool.filter((w) => set.has(w));
       if (filtered.length) return filtered;
     }
@@ -428,22 +428,41 @@ export class GameService {
       return;
     }
     s.usedHints = true;
-    const answer = s.answers[0];
+
+    // Multi-board modes (Double/Triple/Quad Word) share one hint bar for every board, so a
+    // hint must cover every still-unsolved board - not just board 0 - or it's useless on the
+    // boards it silently skips.
+    const activeBoards = s.answers.map((answer, i) => ({ answer, i })).filter(({ i }) => !s.boardSolved[i]);
+    const label = (i: number) => (s.boardsCount > 1 ? `B${i + 1}: ` : '');
     let msg = '';
 
     if (id === 'vowel') {
-      const vowels = answer.split('').filter((c) => 'aeiou'.includes(c));
-      msg = vowels.length ? `Contains the vowel: ${vowels[0].toUpperCase()}` : 'No standard vowels in this word';
+      const parts = activeBoards.map(({ answer, i }) => {
+        const vowels = answer.split('').filter((c) => 'aeiou'.includes(c));
+        return vowels.length ? `${label(i)}${vowels[0].toUpperCase()}` : `${label(i)}none`;
+      });
+      msg = `Vowel - ${parts.join('  ·  ')}`;
     } else if (id === 'first') {
-      msg = `Starts with: ${answer[0].toUpperCase()}`;
+      const parts = activeBoards.map(({ answer, i }) => `${label(i)}${answer[0].toUpperCase()}`);
+      msg = `Starts with - ${parts.join('  ·  ')}`;
     } else if (id === 'position') {
-      const idx = Math.floor(Math.random() * answer.length);
-      msg = `Position ${idx + 1} is: ${answer[idx].toUpperCase()}`;
+      const parts = activeBoards.map(({ answer, i }) => {
+        const idx = Math.floor(Math.random() * answer.length);
+        return `${label(i)}pos ${idx + 1} = ${answer[idx].toUpperCase()}`;
+      });
+      msg = parts.join('  ·  ');
     } else if (id === 'category') {
-      const cats = this.words.categories().filter((c) => this.words.categoryWords(c, answer.length).includes(answer));
-      msg = cats.length ? `Category: ${cats[0][0].toUpperCase()}${cats[0].slice(1)}` : 'No category hint for this word';
+      const parts = activeBoards.map(({ answer, i }) => {
+        const cats = this.words.categories().filter((c) => this.words.categoryWords(c, answer.length).includes(answer));
+        return cats.length ? `${label(i)}${cats[0][0].toUpperCase()}${cats[0].slice(1)}` : null;
+      }).filter((v): v is string => !!v);
+      msg = parts.length ? `Category - ${parts.join('  ·  ')}` : 'No category hint available';
     } else if (id === 'eliminate') {
-      const letters = 'abcdefghijklmnopqrstuvwxyz'.split('').filter((l) => !answer.includes(l));
+      // A letter is only truly "safe" to eliminate if it's absent from every still-active
+      // board's answer - eliminating a letter that's actually needed for board 2 while only
+      // checking board 0 would actively mislead the player.
+      const usedLetters = new Set(activeBoards.map(({ answer }) => answer).join('').split(''));
+      const letters = 'abcdefghijklmnopqrstuvwxyz'.split('').filter((l) => !usedLetters.has(l));
       for (let i = letters.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [letters[i], letters[j]] = [letters[j], letters[i]];
@@ -453,7 +472,7 @@ export class GameService {
         const current = s.keyRanks[l] ?? -1;
         if (0 > current) s.keyRanks[l] = 0;
       });
-      msg = `Not in the word: ${picks.join(', ').toUpperCase()}`;
+      msg = `Not in any word: ${picks.join(', ').toUpperCase()}`;
     }
 
     this.toast.showAlert(msg, 2600);
