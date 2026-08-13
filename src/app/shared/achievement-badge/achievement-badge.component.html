@@ -1,19 +1,25 @@
 <div
-  class="ab-card tilt-surface"
+  class="ab-card hover-lift"
   [class.locked]="locked()"
   [class.compact]="compact()"
   [attr.data-rarity]="rarity()"
-  [appTilt]="14"
 >
   <div class="ab-badge">
     <div class="ab-rim"></div>
     <div class="ab-face">
       <span class="ab-icon" [class.lock-icon]="locked()">{{ locked() ? '🔒' : icon() }}</span>
     </div>
-    <div class="ab-shine"></div>
   </div>
   <span class="ab-name">{{ name() }}</span>
   @if (!compact() && description()) {
     <span class="ab-desc">{{ description() }}</span>
+  }
+  @if (locked() && !compact() && progress(); as p) {
+    <div class="ab-progress">
+      <div class="ab-progress-track">
+        <div class="ab-progress-fill" [style.width.%]="(p.current / p.target) * 100"></div>
+      </div>
+      <span class="ab-progress-label">{{ p.current }} / {{ p.target }}</span>
+    </div>
   }
 </div>

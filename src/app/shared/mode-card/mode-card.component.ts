@@ -2,7 +2,6 @@ import { Component, computed, inject, input, output } from '@angular/core';
 import { ModeConfig } from '../../core/models/game.models';
 import { StorageService } from '../../core/services/storage.service';
 import { ModeVisualComponent } from '../mode-visual/mode-visual.component';
-import { TiltDirective } from '../tilt/tilt.directive';
 
 function formatTime(ms: number): string {
   const totalSeconds = Math.round(ms / 1000);
@@ -13,9 +12,10 @@ function formatTime(ms: number): string {
 
 @Component({
   selector: 'app-mode-card',
-  imports: [ModeVisualComponent, TiltDirective],
+  imports: [ModeVisualComponent],
   templateUrl: './mode-card.component.html',
   styleUrl: './mode-card.component.scss',
+  host: { class: 'mode-card-host' },
 })
 export class ModeCardComponent {
   private readonly storage = inject(StorageService);

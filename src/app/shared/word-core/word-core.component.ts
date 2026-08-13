@@ -1,6 +1,5 @@
 import { Component, inject, input } from '@angular/core';
 import { MotionService } from '../../core/services/motion.service';
-import { TiltDirective } from '../tilt/tilt.directive';
 
 export type WordCoreState = 'idle' | 'active' | 'success';
 
@@ -8,7 +7,6 @@ const FACE_LETTERS = ['W', 'O', 'R', 'D', 'L', 'E'];
 
 @Component({
   selector: 'app-word-core',
-  imports: [TiltDirective],
   templateUrl: './word-core.component.html',
   styleUrl: './word-core.component.scss',
   host: { class: 'word-core-host' },

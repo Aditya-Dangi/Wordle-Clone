@@ -1,8 +1,8 @@
-<div class="word-core tilt-surface" [attr.data-state]="state()" [class.paused]="!motion.pageVisible()" [appTilt]="10" aria-hidden="true">
+<div class="word-core" [attr.data-state]="state()" [class.paused]="!motion.pageVisible()" aria-hidden="true">
   <div class="word-core-glow"></div>
-  <div class="word-core-ring">
+  <div class="word-core-row">
     @for (face of faces; track face.index) {
-      <span class="word-core-face" [style.--i]="face.index">{{ face.letter }}</span>
+      <span class="word-core-tile" [style.--i]="face.index">{{ face.letter }}</span>
     }
   </div>
 </div>

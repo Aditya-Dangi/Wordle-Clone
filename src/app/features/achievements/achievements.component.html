@@ -3,7 +3,16 @@
   <span class="achievements-count">{{ unlockedCount() }} / {{ total }} unlocked</span>
 </div>
 <div class="achievements-grid">
-  @for (a of items(); track a.id) {
-    <app-achievement-badge [icon]="a.icon" [name]="a.name" [description]="a.desc" [locked]="a.locked" [rarity]="a.rarity"></app-achievement-badge>
+  @for (a of items(); track a.id; let i = $index) {
+    <app-achievement-badge
+      class="entrance-stagger"
+      [style.--i]="i"
+      [icon]="a.icon"
+      [name]="a.name"
+      [description]="a.desc"
+      [locked]="a.locked"
+      [rarity]="a.rarity"
+      [progress]="a.progress"
+    ></app-achievement-badge>
   }
 </div>

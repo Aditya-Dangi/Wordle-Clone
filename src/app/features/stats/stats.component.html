@@ -1,36 +1,27 @@
 <h2 class="section-title">Statistics</h2>
 
 <div class="stats-summary-grid">
-  @for (c of [
-    ['Games Played', totals().played],
-    ['Games Won', totals().won],
-    ['Win Rate', winRate()],
-    ['Current Streak', streaks().current],
-    ['Best Streak', streaks().best],
-    ['Daily Streak', streaks().daily.current],
-    ['Best Daily Streak', streaks().daily.best],
-    ['Player Level', profile().level]
-  ]; track c[0]) {
-    <div class="stats-summary-card">
-      <strong>{{ c[1] }}</strong>
-      <span>{{ c[0] }}</span>
+  @for (c of summaryCards(); track c.label; let i = $index) {
+    <div class="stats-summary-card entrance-stagger" [style.--i]="i">
+      <strong><span [appCountUp]="c.value" [countUpSuffix]="c.suffix"></span></strong>
+      <span>{{ c.label }}</span>
     </div>
   }
 </div>
 
-<div class="card">
+<div class="card entrance-fade-up">
   <h3 class="section-title">Guess Distribution</h3>
   @for (row of distribution(); track row.label) {
     <div class="distribution-row">
       <span class="distribution-label">{{ row.label }}</span>
       <span class="distribution-bar-track">
-        <span class="distribution-bar-fill" [style.width.%]="row.pct">{{ row.count }}</span>
+        <span class="distribution-bar-fill" [style.width.%]="barsReady() ? row.pct : 0">{{ row.count }}</span>
       </span>
     </div>
   }
 </div>
 
-<div class="card">
+<div class="card entrance-fade-up">
   <h3 class="section-title">By Mode</h3>
   @if (modeRows().length) {
     <table class="mode-stats-table">

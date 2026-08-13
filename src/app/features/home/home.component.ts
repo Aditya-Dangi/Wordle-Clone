@@ -6,11 +6,12 @@ import { ProgressionService } from '../../core/services/progression.service';
 import { ModesService, MODES } from '../../core/services/modes.service';
 import { GameService } from '../../core/services/game.service';
 import { MockLiveActivityService } from '../../core/services/mock-live-activity.service';
+import { DailyCountdownService } from '../../core/services/daily-countdown.service';
 import { ModeConfig, ModeKey } from '../../core/models/game.models';
 import { ModeCardComponent } from '../../shared/mode-card/mode-card.component';
 import { WordCoreComponent, WordCoreState } from '../../shared/word-core/word-core.component';
 import { AchievementBadgeComponent } from '../../shared/achievement-badge/achievement-badge.component';
-import { TiltDirective } from '../../shared/tilt/tilt.directive';
+import { CountUpDirective } from '../../shared/count-up/count-up.directive';
 
 const MISSION_METRIC: Record<string, { field: keyof ReturnType<StorageService['getMissionLog']>; target: number }> = {
   solve_one: { field: 'wins', target: 1 },
@@ -24,7 +25,7 @@ const MISSION_METRIC: Record<string, { field: keyof ReturnType<StorageService['g
 
 @Component({
   selector: 'app-home',
-  imports: [ModeCardComponent, RouterLink, WordCoreComponent, AchievementBadgeComponent, TiltDirective, DecimalPipe],
+  imports: [ModeCardComponent, RouterLink, WordCoreComponent, AchievementBadgeComponent, CountUpDirective, DecimalPipe],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
@@ -35,6 +36,7 @@ export class HomeComponent {
   private readonly modes = inject(ModesService);
   private readonly game = inject(GameService);
   readonly live = inject(MockLiveActivityService);
+  private readonly countdown = inject(DailyCountdownService);
 
   readonly modeList: ModeConfig[] = Object.values(MODES).filter((m) => m.key !== 'daily');
 
@@ -49,6 +51,17 @@ export class HomeComponent {
     if (d.completed && d.won) return 'success';
     if (d.started) return 'active';
     return 'idle';
+  });
+
+  readonly resetsIn = this.countdown.label;
+
+  readonly heroResetMessage = computed(() => {
+    const label = this.resetsIn();
+    const d = this.daily();
+    if (d.completed) return `Next puzzle in ${label}`;
+    const streak = this.streaks().daily.current;
+    if (streak > 0) return `${label} left to keep your ${streak}-day streak`;
+    return `Today's puzzle resets in ${label}`;
   });
 
   readonly xpToNext = computed(() => this.progression.xpForLevel(this.profile().level));

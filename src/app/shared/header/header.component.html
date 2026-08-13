@@ -7,11 +7,17 @@
       <h1>Wordle</h1>
     </div>
 
-    <nav class="main-nav" aria-label="Main navigation">
-      <a class="nav-btn" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
-      <a class="nav-btn" routerLink="/stats" routerLinkActive="active">Stats</a>
-      <a class="nav-btn" routerLink="/achievements" routerLinkActive="active">Achievements</a>
-      <a class="nav-btn" routerLink="/settings" routerLinkActive="active">Settings</a>
+    <nav class="main-nav" #navList aria-label="Main navigation">
+      <span
+        class="nav-indicator"
+        [class.ready]="indicator().ready"
+        [style.transform]="'translateX(' + indicator().x + 'px)'"
+        [style.width.px]="indicator().w"
+        aria-hidden="true"
+      ></span>
+      @for (item of navItems; track item.path; let i = $index) {
+        <a #navLink class="nav-btn" [routerLink]="item.path" [class.active]="activeIndex() === i">{{ item.label }}</a>
+      }
     </nav>
 
     <div class="header-actions">

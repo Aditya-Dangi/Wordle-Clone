@@ -1,4 +1,4 @@
-<section class="hero tilt-surface" [appTilt]="4">
+<section class="hero entrance-fade-up">
   <div class="hero-copy">
     <span class="hero-eyebrow">Today's Challenge</span>
     <div class="hero-title-row">
@@ -25,15 +25,16 @@
     @if (daily().completed) {
       <p class="hero-status">
         @if (daily().won) {
-          Solved in {{ daily().guessCount }}/6 guesses. Come back tomorrow!
+          Solved in {{ daily().guessCount }}/6 guesses.
         } @else {
-          Missed today's word. Come back tomorrow!
+          Missed today's word.
         }
       </p>
       <button class="btn btn-primary hero-cta" type="button" disabled>Completed for Today</button>
     } @else {
       <button class="btn btn-primary hero-cta" type="button" (click)="playDaily()">Play Daily Challenge</button>
     }
+    <span class="hero-reset">{{ heroResetMessage() }}</span>
   </div>
 
   <div class="hero-visual">
@@ -47,17 +48,17 @@
     <span class="live-pill live-pill-small"><span class="live-dot"></span>LIVE</span>
   </div>
   <ul class="live-feed">
-    @for (item of live.feed(); track item.id) {
-      <li class="live-feed-item">{{ item.text }}</li>
+    @for (item of live.feed(); track item.id; let i = $index) {
+      <li class="live-feed-item" [style.--i]="i">{{ item.text }}</li>
     }
   </ul>
 </section>
 
 <section class="progression">
-  <div class="card level-card tilt-surface tilt-glow" [appTilt]="4">
+  <div class="card level-card hover-lift tilt-glow entrance-fade-up">
     <div class="level-card-top">
       <span class="level-big">LV {{ profile().level }}</span>
-      <span class="level-xp">{{ profile().xp }} / {{ xpToNext() }} XP</span>
+      <span class="level-xp"><span [appCountUp]="profile().xp"></span> / {{ xpToNext() }} XP</span>
     </div>
     <div class="level-track">
       <div class="level-fill" [style.width.%]="xpPercent()"></div>
@@ -66,8 +67,8 @@
   </div>
 
   <div class="stat-grid">
-    @for (stat of statCards(); track stat.label) {
-      <div class="stat-card tilt-surface tilt-glow" [appTilt]="6">
+    @for (stat of statCards(); track stat.label; let i = $index) {
+      <div class="stat-card hover-lift tilt-glow entrance-stagger" [style.--i]="i">
         <div class="stat-card-top">
           <span class="stat-icon">{{ stat.icon }}</span>
           <span class="stat-label">{{ stat.label }}</span>
@@ -96,7 +97,10 @@
 </section>
 
 <section class="card missions-card">
-  <h2>Daily Missions</h2>
+  <div class="card-header-row">
+    <h2>Daily Missions</h2>
+    <span class="missions-reset">Resets in {{ resetsIn() }}</span>
+  </div>
   <ul class="missions-list">
     @for (m of missions().list; track m.id) {
       <li>

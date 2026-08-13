@@ -5,18 +5,24 @@
 
 .word-core {
   position: relative;
-  width: 16rem;
-  height: 16rem;
+  width: 100%;
+  max-width: 22rem;
   margin: 0 auto;
-  perspective: var(--depth-perspective);
+  padding: 1.6em 0;
+  transition: filter var(--dur-ui) var(--ease-out);
+}
+
+.word-core:hover {
+  filter: brightness(1.06);
 }
 
 .word-core-glow {
   position: absolute;
-  inset: -20%;
+  inset: -20% 0%;
   border-radius: 50%;
   background: radial-gradient(closest-side, var(--void-glow-a), transparent 70%);
-  filter: blur(6px);
+  filter: blur(10px);
+  opacity: 0.85;
   transition: background var(--dur-hero) var(--ease-out);
   pointer-events: none;
 }
@@ -29,75 +35,74 @@
   background: radial-gradient(closest-side, color-mix(in srgb, var(--correct) 35%, transparent), transparent 70%);
 }
 
-.word-core-ring {
-  position: absolute;
-  inset: 0;
-  transform-style: preserve-3d;
-  animation: coreSpin 22s linear infinite;
+.word-core-row {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5em;
 }
 
-.word-core.paused .word-core-ring,
-.word-core.paused .word-core-face {
-  animation-play-state: paused;
-}
-
-@keyframes coreSpin {
-  from { transform: rotateY(0deg) rotateX(6deg); }
-  to { transform: rotateY(360deg) rotateX(6deg); }
-}
-
-.word-core-face {
-  position: absolute;
-  inset: 0;
-  margin: auto;
-  width: 3.2rem;
-  height: 3.2rem;
+.word-core-tile {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
   font-weight: 800;
-  font-size: 1.4rem;
+  font-size: 1.15rem;
   color: var(--text);
   background: linear-gradient(155deg, var(--surface), var(--bg-elevated));
   border: 1px solid var(--hairline);
-  border-radius: 0.6rem;
-  box-shadow: var(--elevation-2);
-  backface-visibility: visible;
-  transform: rotateY(calc(var(--i) * 60deg)) translateZ(5.4rem);
-  animation: faceFloat 4.5s ease-in-out infinite;
-  animation-delay: calc(var(--i) * -0.6s);
-  transition: background var(--dur-hero) var(--ease-out), border-color var(--dur-hero) var(--ease-out), box-shadow var(--dur-hero) var(--ease-out);
+  border-radius: 0.5rem;
+  box-shadow: var(--elevation-1);
+  animation: wordCoreFloatA 6.5s ease-in-out infinite;
+  animation-delay: calc(var(--i) * -0.45s);
+  transition:
+    background var(--dur-hero) var(--ease-out),
+    border-color var(--dur-hero) var(--ease-out),
+    box-shadow var(--dur-hero) var(--ease-out),
+    transform var(--dur-ui) var(--ease-out);
 }
 
-.word-core[data-state="active"] .word-core-face {
+.word-core-tile:nth-child(even) {
+  animation-name: wordCoreFloatB;
+  animation-duration: 5.5s;
+}
+
+.word-core.paused .word-core-tile {
+  animation-play-state: paused;
+}
+
+@keyframes wordCoreFloatA {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-4px) rotate(2deg); }
+}
+
+@keyframes wordCoreFloatB {
+  0%, 100% { transform: translateY(0) rotate(2deg); }
+  50% { transform: translateY(-3px) rotate(-2deg); }
+}
+
+.word-core:hover .word-core-tile {
+  transform: translateY(-2px) scale(1.015);
+}
+
+.word-core[data-state="active"] .word-core-tile {
   border-color: color-mix(in srgb, var(--primary) 55%, var(--hairline));
 }
 
-.word-core[data-state="success"] .word-core-face {
+.word-core[data-state="success"] .word-core-tile {
   background: linear-gradient(155deg, var(--correct), color-mix(in srgb, var(--correct) 70%, black));
   border-color: var(--correct);
   color: white;
-  box-shadow: var(--elevation-2), 0 0 20px color-mix(in srgb, var(--correct) 45%, transparent);
-}
-
-@keyframes faceFloat {
-  0%, 100% { transform: rotateY(calc(var(--i) * 60deg)) translateZ(5.4rem) translateY(0); }
-  50% { transform: rotateY(calc(var(--i) * 60deg)) translateZ(5.4rem) translateY(-0.4rem); }
+  box-shadow: var(--elevation-2), 0 0 16px color-mix(in srgb, var(--correct) 40%, transparent);
 }
 
 @media (max-width: 720px) {
-  .word-core {
-    width: 11rem;
-    height: 11rem;
-  }
-  .word-core-face {
-    width: 2.4rem;
-    height: 2.4rem;
-    font-size: 1.05rem;
-    transform: rotateY(calc(var(--i) * 60deg)) translateZ(3.7rem);
-  }
-  @keyframes faceFloat {
-    0%, 100% { transform: rotateY(calc(var(--i) * 60deg)) translateZ(3.7rem) translateY(0); }
-    50% { transform: rotateY(calc(var(--i) * 60deg)) translateZ(3.7rem) translateY(-0.3rem); }
+  .word-core-tile {
+    width: 2.15rem;
+    height: 2.15rem;
+    font-size: 0.95rem;
   }
 }

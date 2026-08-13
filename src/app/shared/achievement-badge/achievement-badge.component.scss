@@ -1,11 +1,13 @@
 :host {
   display: block;
+  height: 100%;
 }
 
 .ab-card {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 0.4em;
   text-align: center;
   padding: 1em 0.7em;
@@ -13,6 +15,7 @@
   background: var(--surface);
   border: 1px solid var(--border);
   box-shadow: var(--elevation-1);
+  height: 100%;
 }
 
 .ab-card.compact {
@@ -26,7 +29,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transform-style: preserve-3d;
 }
 
 .ab-rim {
@@ -39,7 +41,6 @@
     color-mix(in srgb, var(--primary) 70%, transparent),
     color-mix(in srgb, var(--accent) 70%, transparent)
   );
-  transform: translateZ(-0.1rem);
 }
 
 .ab-face {
@@ -50,27 +51,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transform: translateZ(0.2rem);
   box-shadow: var(--elevation-1);
 }
 
 .ab-icon {
   font-size: 1.5rem;
-  transform: translateZ(0.6rem);
   filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4));
-}
-
-.ab-shine {
-  position: absolute;
-  inset: -40%;
-  background: linear-gradient(115deg, transparent 40%, color-mix(in srgb, white 55%, transparent) 50%, transparent 60%);
-  transform: translateX(-120%);
-  transition: transform var(--dur-hero) var(--ease-out);
-  pointer-events: none;
-}
-
-.ab-card:hover .ab-shine {
-  transform: translateX(120%);
 }
 
 .ab-name {
@@ -84,37 +70,93 @@
   line-height: 1.3;
 }
 
-/* ---- rarity ---- */
-.ab-card[data-rarity="rare"] .ab-rim { background: conic-gradient(from 210deg, color-mix(in srgb, var(--primary) 80%, transparent), color-mix(in srgb, var(--accent) 60%, transparent), color-mix(in srgb, var(--primary) 80%, transparent)); }
-.ab-card[data-rarity="epic"] .ab-rim { background: conic-gradient(from 210deg, color-mix(in srgb, var(--accent) 85%, transparent), color-mix(in srgb, var(--danger) 40%, transparent), color-mix(in srgb, var(--accent) 85%, transparent)); }
-.ab-card[data-rarity="legendary"] .ab-rim { background: conic-gradient(from 210deg, color-mix(in srgb, var(--present) 90%, transparent), color-mix(in srgb, var(--accent) 60%, transparent), color-mix(in srgb, var(--present) 90%, transparent)); }
+.ab-progress {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25em;
+  margin-top: 0.1em;
+}
+
+.ab-progress-track {
+  height: 0.35em;
+  background: var(--bg);
+  border-radius: 1em;
+  overflow: hidden;
+}
+
+.ab-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  border-radius: 1em;
+  transition: width var(--dur-hero) var(--ease-out);
+}
+
+.ab-progress-label {
+  font-size: 0.65em;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+/* ---- rarity (unlocked cards only) ---- */
+.ab-card[data-rarity="rare"]:not(.locked) .ab-rim { background: conic-gradient(from 210deg, color-mix(in srgb, var(--primary) 80%, transparent), color-mix(in srgb, var(--accent) 60%, transparent), color-mix(in srgb, var(--primary) 80%, transparent)); }
+.ab-card[data-rarity="epic"]:not(.locked) .ab-rim { background: conic-gradient(from 210deg, color-mix(in srgb, var(--accent) 85%, transparent), color-mix(in srgb, var(--danger) 40%, transparent), color-mix(in srgb, var(--accent) 85%, transparent)); }
+.ab-card[data-rarity="legendary"]:not(.locked) .ab-rim { background: conic-gradient(from 210deg, color-mix(in srgb, var(--present) 90%, transparent), color-mix(in srgb, var(--accent) 60%, transparent), color-mix(in srgb, var(--present) 90%, transparent)); }
 .ab-card[data-rarity="legendary"]:not(.locked) { box-shadow: var(--elevation-1), var(--glow-accent); }
 
-/* ---- locked ---- */
+/* ---- locked: intentionally locked, not "disabled" ----
+   No opacity fade on the whole card - only the rim/icon read as muted so the
+   name stays legible and the card still looks like part of the same system. */
 .ab-card.locked {
-  opacity: 0.55;
+  background: var(--bg-elevated);
+  border-color: var(--hairline);
+  box-shadow: none;
 }
 
 .ab-card.locked .ab-rim {
   background: var(--border);
-  opacity: 0.5;
+  opacity: 0.45;
+}
+
+.ab-card.locked .ab-face {
+  background: var(--surface);
 }
 
 .ab-card.locked .ab-icon {
-  filter: grayscale(1) opacity(0.7);
-  font-size: 1.2rem;
+  filter: grayscale(1) opacity(0.6);
+  font-size: 1.15rem;
 }
 
-.ab-card.locked .ab-name,
-.ab-card.locked .ab-desc {
+.ab-card.locked .ab-name {
   color: var(--text-muted);
 }
 
+.ab-card.locked .ab-desc {
+  color: color-mix(in srgb, var(--text-muted) 70%, transparent);
+}
+
+.ab-card.locked:hover {
+  border-color: color-mix(in srgb, var(--text-muted) 40%, var(--hairline));
+  box-shadow: var(--elevation-1);
+}
+
+/* ---- unlock: one-time settle + glow pulse, never repeats or loops ---- */
 .ab-card:not(.locked) {
   animation: abUnlock var(--dur-celebrate) var(--ease-spring);
 }
 
+.ab-card:not(.locked) .ab-badge {
+  animation: abGlowPulse var(--dur-celebrate) var(--ease-out);
+}
+
 @keyframes abUnlock {
-  from { transform: scale(0.82); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+  0% { transform: scale(0.85); opacity: 0; }
+  60% { transform: scale(1.04); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes abGlowPulse {
+  0% { filter: brightness(1) drop-shadow(0 0 0 transparent); }
+  45% { filter: brightness(1.25) drop-shadow(0 0 14px color-mix(in srgb, var(--accent) 55%, transparent)); }
+  100% { filter: brightness(1) drop-shadow(0 0 0 transparent); }
 }

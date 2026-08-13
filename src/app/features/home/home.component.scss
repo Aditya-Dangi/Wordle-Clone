@@ -133,6 +133,12 @@
   color: var(--text-muted);
 }
 
+.hero-reset {
+  font-size: 0.78em;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
 .hero-cta {
   align-self: flex-start;
   margin-top: 0.3em;
@@ -193,7 +199,8 @@
   border-radius: var(--radius);
   font-size: 0.85em;
   color: var(--text-muted);
-  animation: feedIn 320ms var(--ease-out);
+  animation: feedIn 320ms var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 45ms);
 }
 
 @keyframes feedIn {
@@ -335,6 +342,13 @@
 /* ==========================================================================
    Missions
    ========================================================================== */
+.missions-reset {
+  font-size: 0.8em;
+  color: var(--text-muted);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
 .missions-list li {
   display: flex;
   align-items: flex-start;

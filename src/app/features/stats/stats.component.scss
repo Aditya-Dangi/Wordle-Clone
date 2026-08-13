@@ -16,6 +16,12 @@
   border-radius: var(--radius);
   padding: 0.7em;
   text-align: center;
+  transition: transform var(--dur-ui) var(--ease-out), border-color var(--dur-ui) var(--ease-out);
+}
+
+.stats-summary-card:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--primary) 35%, var(--border));
 }
 
 .stats-summary-card strong {
@@ -61,7 +67,7 @@
   font-size: 0.8em;
   font-weight: 700;
   padding-right: 0.4em;
-  transition: width 400ms ease;
+  transition: width var(--dur-hero) var(--ease-out);
 }
 
 .mode-stats-table {

@@ -169,7 +169,6 @@ ul {
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
   --depth-perspective: 1400px;
-  --tilt-max: 8deg;
 
   --radius-lg: 1.1em;
   --radius-xl: 1.6em;
@@ -179,10 +178,8 @@ ul {
   --shadow-rgb: 60, 45, 20;
 }
 
-/* Card/element pointer-tilt, set by the appTilt directive - inert until JS sets it. */
+/* Static center point for the .tilt-glow spotlight highlight (see below). */
 :root {
-  --tilt-rx: 0deg;
-  --tilt-ry: 0deg;
   --tilt-px: 50%;
   --tilt-py: 50%;
 }
@@ -368,27 +365,40 @@ ul {
 
 /* ==========================================================================
    Route transition (native View Transitions API, see withViewTransitions())
+   Only the routed content region gets a named view-transition group, so the
+   header/bottom-nav (unchanged pixels between routes) never move or flash -
+   they simply stay put while the page content fades/settles beneath them.
    ========================================================================== */
-@keyframes routeFadeIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
+.app-main {
+  view-transition-name: page-content;
 }
 
-::view-transition-old(root) {
-  animation: 140ms ease both routeFadeOut;
-}
-
+::view-transition-old(root),
 ::view-transition-new(root) {
-  animation: 200ms ease both routeFadeIn;
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+@keyframes routeFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes routeFadeOut {
   to { opacity: 0; transform: translateY(-6px); }
 }
 
+::view-transition-old(page-content) {
+  animation: 140ms var(--ease-out) both routeFadeOut;
+}
+
+::view-transition-new(page-content) {
+  animation: 220ms var(--ease-out) both routeFadeIn;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  ::view-transition-old(root),
-  ::view-transition-new(root) {
+  ::view-transition-old(page-content),
+  ::view-transition-new(page-content) {
     animation: none;
   }
 }
@@ -501,15 +511,31 @@ ul {
 }
 
 /* ==========================================================================
-   Spatial surfaces: tilt + cursor-glow utilities consumed by [appTilt] hosts
+   Card interaction system: one shared, restrained hover/active/focus recipe
+   so every interactive card across the app behaves the same way. transform +
+   opacity only (cheap to animate), no rotation, no per-page reinvention.
    ========================================================================== */
-.tilt-surface {
-  transform: perspective(var(--depth-perspective)) rotateX(var(--tilt-rx)) rotateY(var(--tilt-ry)) translateZ(0);
-  transition: transform var(--dur-ui) var(--ease-out), box-shadow var(--dur-ui) var(--ease-out);
-  transform-style: preserve-3d;
-  will-change: transform;
+.hover-lift {
+  transition: transform var(--dur-ui) var(--ease-out), border-color var(--dur-ui) var(--ease-out), box-shadow var(--dur-ui) var(--ease-out);
 }
 
+.hover-lift:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--primary) 40%, var(--hairline));
+  box-shadow: var(--elevation-3);
+}
+
+.hover-lift:active {
+  transform: translateY(-1px) scale(0.99);
+}
+
+.hover-lift:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Static, cursor-independent "spotlight" highlight - centered via the default
+   --tilt-px/--tilt-py values below, no pointer tracking or JS animation loop. */
 .tilt-glow {
   position: relative;
   isolation: isolate;
@@ -530,6 +556,24 @@ ul {
 .tilt-glow:hover::before,
 .tilt-glow:focus-within::before {
   opacity: 1;
+}
+
+/* ==========================================================================
+   Entrance primitives: one-time fade+settle used for data-driven page
+   content (stats cards, live feed rows, etc). Never loops.
+   ========================================================================== */
+@keyframes entranceFadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.entrance-fade-up {
+  animation: entranceFadeUp 380ms var(--ease-out) both;
+}
+
+.entrance-stagger {
+  animation: entranceFadeUp 380ms var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 40ms);
 }
 
 .result-share-text {

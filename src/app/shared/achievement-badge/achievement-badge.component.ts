@@ -1,12 +1,15 @@
 import { Component, input } from '@angular/core';
-import { TiltDirective } from '../tilt/tilt.directive';
 import { AchievementRarity } from '../../core/services/progression.service';
 
 export type { AchievementRarity };
 
+export interface AchievementProgress {
+  current: number;
+  target: number;
+}
+
 @Component({
   selector: 'app-achievement-badge',
-  imports: [TiltDirective],
   templateUrl: './achievement-badge.component.html',
   styleUrl: './achievement-badge.component.scss',
   host: { class: 'achievement-badge-host' },
@@ -18,4 +21,5 @@ export class AchievementBadgeComponent {
   readonly locked = input(false);
   readonly rarity = input<AchievementRarity>('common');
   readonly compact = input(false);
+  readonly progress = input<AchievementProgress | null>(null);
 }
